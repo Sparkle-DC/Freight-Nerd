@@ -1,0 +1,295 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+    function uidUnchanged() {
+      return !('userId' in request.resource.data) || request.resource.data.userId == request.auth.uid;
+    }
+    function uidNotModified() {
+      return !('userId' in request.resource.data) || request.resource.data.userId == resource.data.userId;
+    }
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+    function areImmutableFieldsUnchanged(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+    function isAdmin() {
+      return isAuthenticated() &&
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         (request.auth.token.email == "nisaldx@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+    function isValidUser(data) {
+      return hasOnlyAllowedFields(['uid', 'email', 'name', 'role', 'createdAt']) &&
+             data.uid is string && data.uid.size() > 0 &&
+             data.email is string && isValidEmail(data.email) &&
+             data.name is string && data.name.size() <= 100 &&
+             data.role in ['user', 'admin'] &&
+             data.createdAt is string;
+    }
+
+    function isValidCustomer(data) {
+      return hasOnlyAllowedFields(['userId', 'name', 'notes', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             (!('notes' in data) || (data.notes is string && data.notes.size() <= 1000)) &&
+             data.createdAt is string;
+    }
+
+    function isValidFuelIndex(data) {
+      return hasOnlyAllowedFields(['price', 'source', 'effectiveDate', 'createdAt']) &&
+             data.price is number && data.price > 0 &&
+             data.source is string && data.source.size() > 0 && data.source.size() <= 100 &&
+             data.effectiveDate is string &&
+             data.createdAt is string;
+    }
+
+    function isValidSchedule(data) {
+      return hasOnlyAllowedFields(['userId', 'customerId', 'name', 'baseRate', 'baselineFuelPrice', 'mpg', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.customerId is string && data.customerId.size() > 0 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             data.baseRate is number && data.baseRate >= 0 &&
+             data.baselineFuelPrice is number && data.baselineFuelPrice >= 0 &&
+             data.mpg is number && data.mpg > 0 &&
+             data.createdAt is string;
+    }
+
+    function isValidScheduleSnapshot(data) {
+      return hasOnlyAllowedFields(['userId', 'scheduleId', 'fuelIndexId', 'surchargePerMile', 'surchargePercentage', 'adjustedRate', 'effectiveDate', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.scheduleId is string && data.scheduleId.size() > 0 &&
+             data.fuelIndexId is string && data.fuelIndexId.size() > 0 &&
+             data.surchargePerMile is number &&
+             data.surchargePercentage is number &&
+             data.adjustedRate is number &&
+             data.effectiveDate is string &&
+             data.createdAt is string;
+    }
+
+    function isValidSkuProfile(data) {
+      return hasOnlyAllowedFields(['userId', 'sku', 'length', 'width', 'height', 'weight', 'palletIncluded', 'stackable', 'packagingType', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.sku is string && data.sku.size() > 0 && data.sku.size() <= 100 &&
+             data.length is number && data.length > 0 &&
+             data.width is number && data.width > 0 &&
+             data.height is number && data.height > 0 &&
+             data.weight is number && data.weight > 0 &&
+             data.palletIncluded is bool &&
+             data.stackable is bool &&
+             (!('packagingType' in data) || (data.packagingType is string && data.packagingType.size() <= 100)) &&
+             data.createdAt is string;
+    }
+
+    function isValidShipmentHistory(data) {
+      return hasOnlyAllowedFields(['userId', 'length', 'width', 'height', 'weight', 'units', 'palletIncluded', 'stackable', 'packagingType', 'density', 'estimatedClass', 'riskScore', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.length is number && data.length > 0 &&
+             data.width is number && data.width > 0 &&
+             data.height is number && data.height > 0 &&
+             data.weight is number && data.weight > 0 &&
+             data.units is number && data.units > 0 &&
+             data.palletIncluded is bool &&
+             data.stackable is bool &&
+             (!('packagingType' in data) || (data.packagingType is string && data.packagingType.size() <= 100)) &&
+             data.density is number && data.density > 0 &&
+             data.estimatedClass is string && data.estimatedClass.size() > 0 && data.estimatedClass.size() <= 10 &&
+             data.riskScore is string && data.riskScore in ['LOW', 'MEDIUM', 'HIGH'] &&
+             data.createdAt is string;
+    }
+
+    function isValidMonitoredCarrier(data) {
+      return hasOnlyAllowedFields(['userId', 'mcNumber', 'dotNumber', 'name', 'riskScore', 'status', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.mcNumber is string && data.mcNumber.size() > 0 && data.mcNumber.size() <= 20 &&
+             (!('dotNumber' in data) || (data.dotNumber is string && data.dotNumber.size() <= 20)) &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 200 &&
+             data.riskScore is string && data.riskScore in ['LOW', 'MEDIUM', 'HIGH'] &&
+             data.status is string && data.status.size() > 0 && data.status.size() <= 50 &&
+             data.createdAt is string;
+    }
+
+    function isValidCarrierNote(data) {
+      return hasOnlyAllowedFields(['userId', 'mcNumber', 'note', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.mcNumber is string && data.mcNumber.size() > 0 && data.mcNumber.size() <= 20 &&
+             data.note is string && data.note.size() > 0 && data.note.size() <= 2000 &&
+             data.createdAt is string;
+    }
+
+    function isValidLandedCostCalculation(data) {
+      return hasOnlyAllowedFields(['userId', 'productDescription', 'originCountry', 'destinationCountry', 'productValue', 'shippingCost', 'hsCode', 'dutyRate', 'vatRate', 'totalDuty', 'totalVat', 'landedCost', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.productDescription is string && data.productDescription.size() > 0 && data.productDescription.size() <= 500 &&
+             data.originCountry is string && data.originCountry.size() > 0 && data.originCountry.size() <= 100 &&
+             data.destinationCountry is string && data.destinationCountry.size() > 0 && data.destinationCountry.size() <= 100 &&
+             data.productValue is number && data.productValue >= 0 &&
+             data.shippingCost is number && data.shippingCost >= 0 &&
+             data.hsCode is string && data.hsCode.size() > 0 && data.hsCode.size() <= 50 &&
+             data.dutyRate is number && data.dutyRate >= 0 &&
+             data.vatRate is number && data.vatRate >= 0 &&
+             data.totalDuty is number && data.totalDuty >= 0 &&
+             data.totalVat is number && data.totalVat >= 0 &&
+             data.landedCost is number && data.landedCost >= 0 &&
+             data.createdAt is string;
+    }
+
+    function isValidSavedProduct(data) {
+      return hasOnlyAllowedFields(['userId', 'name', 'description', 'hsCode', 'dutyRate', 'vatRate', 'originCountry', 'destinationCountry', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 200 &&
+             data.description is string && data.description.size() > 0 && data.description.size() <= 500 &&
+             data.hsCode is string && data.hsCode.size() > 0 && data.hsCode.size() <= 50 &&
+             data.dutyRate is number && data.dutyRate >= 0 &&
+             data.vatRate is number && data.vatRate >= 0 &&
+             data.originCountry is string && data.originCountry.size() > 0 && data.originCountry.size() <= 100 &&
+             data.destinationCountry is string && data.destinationCountry.size() > 0 && data.destinationCountry.size() <= 100 &&
+             data.createdAt is string;
+    }
+
+    function isValidDnDAudit(data) {
+      return hasOnlyAllowedFields(['userId', 'containerNumber', 'availabilityDate', 'pickupDate', 'freeTimeDays', 'billedDays', 'dailyRate', 'totalBilled', 'isValid', 'estimatedOvercharge', 'issues', 'createdAt']) &&
+             data.userId is string && data.userId.size() > 0 &&
+             data.containerNumber is string && data.containerNumber.size() > 0 && data.containerNumber.size() <= 50 &&
+             data.availabilityDate is string &&
+             data.pickupDate is string &&
+             data.freeTimeDays is number && data.freeTimeDays >= 0 &&
+             data.billedDays is number && data.billedDays >= 0 &&
+             data.dailyRate is number && data.dailyRate >= 0 &&
+             data.totalBilled is number && data.totalBilled >= 0 &&
+             data.isValid is bool &&
+             data.estimatedOvercharge is number &&
+             data.issues is list &&
+             data.createdAt is string;
+    }
+
+    function isValid3plLead(data) {
+      return hasOnlyAllowedFields(['userId', 'email', 'requirements', 'matchedProviders', 'status', 'createdAt']) &&
+             data.userId is string &&
+             data.email is string && data.email.size() > 0 &&
+             data.requirements is map &&
+             data.matchedProviders is list &&
+             data.status is string &&
+             data.createdAt is string;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated() && isOwner(userId) && isValidUser(request.resource.data) && (request.resource.data.role == 'user' || isAdmin());
+      allow update: if isAuthenticated() && isOwner(userId) && isValidUser(request.resource.data) && areImmutableFieldsUnchanged(['uid', 'createdAt']) && (request.resource.data.role == resource.data.role || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    match /customers/{customerId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidCustomer(request.resource.data);
+      allow update: if isAuthenticated() && isDocOwner() && uidNotModified() && areImmutableFieldsUnchanged(['userId', 'createdAt']) && isValidCustomer(request.resource.data);
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /fuel_index/{fuelIndexId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidFuelIndex(request.resource.data);
+      allow update: if isAdmin() && isValidFuelIndex(request.resource.data) && areImmutableFieldsUnchanged(['createdAt']);
+      allow delete: if isAdmin();
+    }
+
+    match /schedules/{scheduleId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidSchedule(request.resource.data);
+      allow update: if isAuthenticated() && isDocOwner() && uidNotModified() && areImmutableFieldsUnchanged(['userId', 'createdAt']) && isValidSchedule(request.resource.data);
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /schedule_snapshots/{snapshotId} {
+      allow get: if true; // Allow public read of a specific snapshot by ID
+      allow list: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidScheduleSnapshot(request.resource.data);
+      allow update: if false; // Snapshots are immutable
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /sku_profiles/{skuId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidSkuProfile(request.resource.data);
+      allow update: if isAuthenticated() && isDocOwner() && uidNotModified() && areImmutableFieldsUnchanged(['userId', 'createdAt']) && isValidSkuProfile(request.resource.data);
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /shipment_history/{historyId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidShipmentHistory(request.resource.data);
+      allow update: if false; // History is immutable
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /monitored_carriers/{carrierId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidMonitoredCarrier(request.resource.data);
+      allow update: if isAuthenticated() && isDocOwner() && uidNotModified() && areImmutableFieldsUnchanged(['userId', 'mcNumber', 'createdAt']) && isValidMonitoredCarrier(request.resource.data);
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /carrier_notes/{noteId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidCarrierNote(request.resource.data);
+      allow update: if isAuthenticated() && isDocOwner() && uidNotModified() && areImmutableFieldsUnchanged(['userId', 'mcNumber', 'createdAt']) && isValidCarrierNote(request.resource.data);
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /landed_cost_history/{historyId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidLandedCostCalculation(request.resource.data);
+      allow update: if false; // History is immutable
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /saved_products/{productId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidSavedProduct(request.resource.data);
+      allow update: if isAuthenticated() && isDocOwner() && uidNotModified() && areImmutableFieldsUnchanged(['userId', 'createdAt']) && isValidSavedProduct(request.resource.data);
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /dnd_audits/{auditId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && uidUnchanged() && isValidDnDAudit(request.resource.data);
+      allow update: if false; // Audits are immutable history
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+
+    match /3pl_leads/{leadId} {
+      // Allow anyone to create a lead (unauthenticated users can submit their email)
+      allow create: if isValid3plLead(request.resource.data);
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && isDocOwner() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+      allow delete: if isAuthenticated() && isDocOwner();
+    }
+  }
+}
