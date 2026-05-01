@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <base href="/Freight-Nerd/">
+ <meta name="description" content="Free Carbon Emissions Calculator for shipping - Estimate CO2 emissions for truck, ocean, air, and rail freight. Track your carbon footprint.">
+ <title>Carbon Emissions Calculator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
+</head>
+<body class="bg-gray-50">
+<div class="max-w-6xl mx-auto px-4 py-8">
+ <div class="flex items-center justify-between mb-8">
+  <a href="/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
+  <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+ </div>
+ <div class="grid lg:grid-cols-2 gap-8">
+  <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+   <div class="flex items-center gap-3 mb-6"><i class="fas fa-leaf text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">Carbon Emissions Calculator</h1><p class="text-gray-600">CO₂ estimates for your shipments</p></div></div>
+   <div class="space-y-6">
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Transport Mode</label>
+     <select id="mode" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+      <option value="truck">Truck (FTL)</option>
+      <option value="ocean">Ocean (Container ship)</option>
+      <option value="air">Air Freight</option>
+      <option value="rail">Rail</option>
+     </select>
+    </div>
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Distance (miles)</label><input id="distance" type="number" value="1500" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Weight (lbs)</label><input id="weight" type="number" value="15000" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    <button onclick="calcEmissions()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all"><i class="fas fa-calculator"></i> Calculate Emissions</button>
+   </div>
+  </div>
+  <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+   <h2 class="text-2xl font-semibold mb-6">CO₂ Emissions</h2>
+   <div id="resultContent" class="space-y-6"></div>
+  </div>
+ </div>
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+</div>
+<script>
+function calcEmissions(){
+ const mode=document.getElementById('mode').value,d=parseFloat(document.getElementById('distance').value)||0,w=parseFloat(document.getElementById('weight').value)||0;
+ const rates={truck:0.0004,ocean:0.00008,air:0.0012,rail:0.00015};
+ const co2Kg=d*w*rates[mode],co2Tonnes=co2Kg/1000;
+ const trees=Math.round(co2Tonnes*45);
+ const html=`<div class="grid grid-cols-2 gap-4"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">CO₂ EMISSIONS</p><p class="text-5xl font-semibold text-emerald-600">${co2Kg.toFixed(0)}</p><p class="text-sm text-gray-600">kg CO₂</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">EQUIVALENT</p><p class="text-5xl font-semibold text-amber-600">${co2Tonnes.toFixed(2)}</p><p class="text-sm text-gray-600">metric tonnes</p></div></div><div class="mt-6 bg-white border border-gray-200 rounded-3xl p-6 text-center"><p class="text-sm text-gray-500">That's like planting</p><p class="text-5xl font-bold text-emerald-600">${trees}</p><p class="text-sm text-gray-500">trees to offset</p></div><div class="mt-4 text-sm bg-gray-50 rounded-2xl p-5">These are estimates. Actual emissions vary by vessel/truck type, load factor, and route.</div>`;
+ document.getElementById('resultContent').innerHTML=html;document.getElementById('results').classList.remove('hidden');
+ document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${html}</div>`;
+}
+document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',calcEmissions));
+window.onload=calcEmissions;
+</script>
+</body>
+</html>

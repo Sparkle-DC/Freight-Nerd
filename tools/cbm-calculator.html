@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <base href="/Freight-Nerd/">
+ <meta name="description" content="Free CBM Calculator - Calculate cubic meters for ocean and air freight. Instant volume and weight calculations for LCL and air shipments.">
+ <title>CBM Calculator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
+</head>
+<body class="bg-gray-50">
+<div class="max-w-6xl mx-auto px-4 py-8">
+ <div class="flex items-center justify-between mb-8">
+  <a href="/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
+  <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+ </div>
+ <div class="grid lg:grid-cols-2 gap-8">
+  <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+   <div class="flex items-center gap-3 mb-6"><i class="fas fa-cube text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">CBM Calculator</h1><p class="text-gray-600">Cubic Meters for Ocean & Air Freight</p></div></div>
+   <div class="space-y-8">
+    <div><h3 class="font-medium text-gray-700 mb-4"><i class="fas fa-ruler-combined"></i> Dimensions</h3>
+     <div class="grid grid-cols-3 gap-4">
+      <div><label class="block text-sm font-medium text-gray-600 mb-1">Length</label><input id="length" type="number" value="100" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+      <div><label class="block text-sm font-medium text-gray-600 mb-1">Width</label><input id="width" type="number" value="80" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+      <div><label class="block text-sm font-medium text-gray-600 mb-1">Height</label><input id="height" type="number" value="60" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+     </div>
+    </div>
+    <div class="grid grid-cols-2 gap-6">
+     <div><label class="block text-sm font-medium text-gray-600 mb-1">Unit</label>
+      <div class="flex bg-gray-100 rounded-2xl p-1">
+       <button onclick="setUnit('cm')" id="btn-cm" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all bg-white shadow-sm">Centimeters</button>
+       <button onclick="setUnit('inches')" id="btn-inches" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all">Inches</button>
+      </div>
+     </div>
+     <div><label class="block text-sm font-medium text-gray-600 mb-1">Quantity</label><input id="quantity" type="number" value="1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    </div>
+    <button onclick="calculateCBM()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3"><i class="fas fa-calculator"></i> Calculate CBM</button>
+   </div>
+  </div>
+  <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+   <h2 class="text-2xl font-semibold mb-6">Results</h2>
+   <div id="resultContent" class="space-y-6"></div>
+  </div>
+ </div>
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+</div>
+<script>
+let currentUnit = 'cm';
+function setUnit(u){currentUnit=u;['btn-cm','btn-inches'].forEach(id=>{const el=document.getElementById(id);el.classList.toggle('bg-white',id==='btn-'+u);el.classList.toggle('shadow-sm',id==='btn-'+u)})}
+function calculateCBM(){
+ const l=parseFloat(document.getElementById('length').value)||0,w=parseFloat(document.getElementById('width').value)||0,h=parseFloat(document.getElementById('height').value)||0,q=parseFloat(document.getElementById('quantity').value)||1;
+ let lC=currentUnit==='cm'?l/100:l*0.0254,wC=currentUnit==='cm'?w/100:w*0.0254,hC=currentUnit==='cm'?h/100:h*0.0254;
+ const cbm=lC*wC*hC,totalCBM=cbm*q,cuft=cbm*35.315,totalCuft=totalCBM*35.315;
+ const html=`<div class="grid grid-cols-2 gap-4"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">VOLUME (1 unit)</p><p class="text-5xl font-semibold text-emerald-600">${cbm.toFixed(3)}</p><p class="text-sm text-gray-600">CBM (${cuft.toFixed(1)} cu ft)</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">TOTAL (${q} units)</p><p class="text-5xl font-semibold text-amber-600">${totalCBM.toFixed(3)}</p><p class="text-sm text-gray-600">CBM (${totalCuft.toFixed(1)} cu ft)</p></div></div><div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8"><div class="space-y-3 text-sm"><div class="flex justify-between"><span>Total CBM</span><span class="font-bold text-lg text-emerald-600">${totalCBM.toFixed(3)} CBM</span></div><div class="flex justify-between"><span>Total Cubic Feet</span><span class="font-medium">${totalCuft.toFixed(1)} cu ft</span></div></div></div>`;
+ document.getElementById('resultContent').innerHTML=html;document.getElementById('results').classList.remove('hidden');
+ document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${html}</div>`;
+}
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calculateCBM));
+window.onload=calculateCBM;
+</script>
+</body>
+</html>

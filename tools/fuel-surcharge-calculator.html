@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <base href="/Freight-Nerd/">
+ <meta name="description" content="Free Fuel Surcharge Calculator 2026 - Calculate fuel surcharges for trucking based on DOE fuel index. Essential for carriers and brokers.">
+ <title>Fuel Surcharge Calculator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
+</head>
+<body class="bg-gray-50">
+<div class="max-w-6xl mx-auto px-4 py-8">
+ <div class="flex items-center justify-between mb-8">
+  <a href="/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
+  <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+ </div>
+ <div class="grid lg:grid-cols-2 gap-8">
+  <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+   <div class="flex items-center gap-3 mb-6"><i class="fas fa-gas-pump text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">Fuel Surcharge Calculator</h1><p class="text-gray-600">2026 DOE Index-Based</p></div></div>
+   <div class="space-y-6">
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Current Diesel Price ($/gal)</label><input id="dieselPrice" type="number" value="4.20" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Base Fuel Price ($/gal)</label><input id="basePrice" type="number" value="3.00" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"><p class="text-xs text-gray-500 mt-1">Often $3.00 or $3.25 for standard surcharge programs</p></div>
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Miles for This Load</label><input id="miles" type="number" value="1200" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Baseline MPG</label><select id="mpg" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"><option value="5.5">5.5 MPG (older trucks)</option><option value="6.0">6.0 MPG</option><option value="6.5" selected>6.5 MPG (avg dry van)</option><option value="7.0">7.0 MPG (newer truck)</option></select></div>
+    <button onclick="calcFuelSurcharge()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all"><i class="fas fa-calculator"></i> Calculate Surcharge</button>
+   </div>
+  </div>
+  <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+   <h2 class="text-2xl font-semibold mb-6">Surcharge Results</h2>
+   <div id="resultContent" class="space-y-6"></div>
+  </div>
+ </div>
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+</div>
+<script>
+function calcFuelSurcharge(){
+ const dp=parseFloat(document.getElementById('dieselPrice').value)||0,bp=parseFloat(document.getElementById('basePrice').value)||0,m=parseFloat(document.getElementById('miles').value)||0,mpg=parseFloat(document.getElementById('mpg').value)||6.5;
+ const diff=Math.max(0,dp-bp),surchargePerMile=diff/mpg,totalSurcharge=surchargePerMile*m,fuelCostPerMile=dp/mpg,totalFuelCost=fuelCostPerMile*m;
+ const html=`<div class="grid grid-cols-2 gap-4"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">SURCHARGE PER MILE</p><p class="text-5xl font-semibold text-emerald-600">$${surchargePerMile.toFixed(2)}</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">TOTAL SURCHARGE</p><p class="text-5xl font-semibold text-amber-600">$${totalSurcharge.toFixed(0)}</p></div></div><div class="mt-6 bg-white border border-gray-200 rounded-3xl p-6"><div class="space-y-2 text-sm"><div class="flex justify-between"><span>Fuel Price vs Base</span><span>$${dp.toFixed(2)} - $${bp.toFixed(2)} = $${diff.toFixed(2)} diff</span></div><div class="flex justify-between"><span>Total Fuel Cost</span><span>$${totalFuelCost.toFixed(0)}</span></div></div></div><div class="mt-4 text-sm bg-gray-50 rounded-2xl p-5"><strong>Pro Tip:</strong> Most carriers update surcharges weekly based on the DOE National Average Diesel price.</div>`;
+ document.getElementById('resultContent').innerHTML=html;document.getElementById('results').classList.remove('hidden');
+ document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${html}</div>`;
+}
+document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',calcFuelSurcharge));
+window.onload=calcFuelSurcharge;
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <base href="/Freight-Nerd/">
+ <meta name="description" content="Free Freight Profit Calculator - Calculate your real profit margin on every load. Revenue minus costs for brokers and carriers.">
+ <title>Freight Profit Calculator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
+</head>
+<body class="bg-gray-50">
+<div class="max-w-6xl mx-auto px-4 py-8">
+ <div class="flex items-center justify-between mb-8">
+  <a href="/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
+  <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+ </div>
+ <div class="grid lg:grid-cols-2 gap-8">
+  <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+   <div class="flex items-center gap-3 mb-6"><i class="fas fa-chart-line text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">Freight Profit Calculator</h1><p class="text-gray-600">Revenue — Costs = Profit</p></div></div>
+   <div class="space-y-6">
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Total Revenue (USD)</label><input id="revenue" type="number" value="5000" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    <div><h3 class="font-medium text-gray-700 mb-3">Costs</h3>
+     <div class="grid grid-cols-2 gap-4">
+      <div><label class="block text-sm font-medium text-gray-600 mb-1">Carrier / Driver Pay</label><input id="carrierPay" type="number" value="2800" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+      <div><label class="block text-sm font-medium text-gray-600 mb-1">Fuel Cost</label><input id="fuelCost" type="number" value="600" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+      <div><label class="block text-sm font-medium text-gray-600 mb-1">Broker / Commission</label><input id="commission" type="number" value="300" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+      <div><label class="block text-sm font-medium text-gray-600 mb-1">Other Costs</label><input id="other" type="number" value="200" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+     </div>
+    </div>
+    <button onclick="calcProfit()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all"><i class="fas fa-calculator"></i> Calculate Profit</button>
+   </div>
+  </div>
+  <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+   <h2 class="text-2xl font-semibold mb-6">Profit Breakdown</h2>
+   <div id="resultContent" class="space-y-6"></div>
+  </div>
+ </div>
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+</div>
+<script>
+function calcProfit(){
+ const r=parseFloat(document.getElementById('revenue').value)||0,cp=parseFloat(document.getElementById('carrierPay').value)||0,fc=parseFloat(document.getElementById('fuelCost').value)||0,com=parseFloat(document.getElementById('commission').value)||0,oc=parseFloat(document.getElementById('other').value)||0;
+ const totalCost=cp+fc+com+oc,profit=r-totalCost,margin=r>0?(profit/r)*100:0;
+ const html=`<div class="grid grid-cols-2 gap-4"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">REVENUE</p><p class="text-5xl font-semibold text-emerald-600">$${r.toFixed(0)}</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">TOTAL COSTS</p><p class="text-5xl font-semibold text-amber-600">$${totalCost.toFixed(0)}</p></div></div><div class="mt-8 text-center bg-white border border-gray-200 rounded-3xl p-8"><p class="text-sm text-gray-500 mb-1">PROFIT</p><p class="text-6xl font-bold ${profit>=0?'text-emerald-600':'text-red-500'}">$${profit.toFixed(0)}</p><p class="mt-2 font-medium ${margin>=0?'text-emerald-600':'text-red-500'}">${margin.toFixed(1)}% margin</p></div><div class="mt-6 bg-gray-50 rounded-2xl p-5 text-sm"><div class="space-y-2"><div class="flex justify-between"><span>Carrier Pay</span><span>$${cp.toFixed(0)}</span></div><div class="flex justify-between"><span>Fuel</span><span>$${fc.toFixed(0)}</span></div><div class="flex justify-between"><span>Commission</span><span>$${com.toFixed(0)}</span></div><div class="flex justify-between"><span>Other</span><span>$${oc.toFixed(0)}</span></div></div></div>`;
+ document.getElementById('resultContent').innerHTML=html;document.getElementById('results').classList.remove('hidden');
+ document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${html}</div>`;
+}
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calcProfit));
+window.onload=calcProfit;
+</script>
+</body>
+</html>

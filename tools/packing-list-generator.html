@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <base href="/Freight-Nerd/">
+ <meta name="description" content="Free Packing List Generator - Create professional export packing lists with PDF download. Essential for international shipping documentation.">
+ <title>Packing List Generator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
+</head>
+<body class="bg-gray-50">
+<div class="max-w-6xl mx-auto px-4 py-8">
+ <div class="flex items-center justify-between mb-8">
+  <a href="/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
+  <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+ </div>
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+  <div class="flex items-center gap-3 mb-6"><i class="fas fa-file-export text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">Packing List Generator</h1><p class="text-gray-600">Export packing list for international shipping</p></div></div>
+  <div class="grid lg:grid-cols-2 gap-8">
+   <div class="space-y-6">
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Shipper / Exporter</label><input id="shipper" type="text" value="ABC Exports Ltd" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Consignee</label><input id="consignee" type="text" value="XYZ Imports Inc" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    <div class="grid grid-cols-2 gap-4">
+     <div><label class="block text-sm font-medium text-gray-600 mb-1">Invoice #</label><input id="invoice" type="text" value="INV-001" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+     <div><label class="block text-sm font-medium text-gray-600 mb-1">Date</label><input id="date" type="date" value="" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    </div>
+    <div><label class="block text-sm font-medium text-gray-600 mb-1">Item Description</label><textarea id="description" rows="2" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">Cotton T-Shirts</textarea></div>
+    <div class="grid grid-cols-3 gap-4">
+     <div><label class="block text-sm font-medium text-gray-600 mb-1">Qty</label><input id="qty" type="number" value="500" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+     <div><label class="block text-sm font-medium text-gray-600 mb-1">Weight (kg)</label><input id="weight" type="number" value="250" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+     <div><label class="block text-sm font-medium text-gray-600 mb-1">CBM</label><input id="cbm" type="number" value="2.5" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+    </div>
+    <button onclick="generatePackingList()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all"><i class="fas fa-file-alt"></i> Generate Packing List</button>
+   </div>
+   <div id="packingListOutput" class="bg-gray-50 rounded-3xl p-6 text-sm font-mono whitespace-pre-wrap border" style="display:none"></div>
+  </div>
+ </div>
+</div>
+<script>
+window.onload=function(){document.getElementById('date').value=new Date().toISOString().split('T')[0]};
+function generatePackingList(){
+ const s=document.getElementById('shipper').value,c=document.getElementById('consignee').value,i=document.getElementById('invoice').value,d=document.getElementById('date').value,desc=document.getElementById('description').value,q=document.getElementById('qty').value,w=document.getElementById('weight').value,cbm=document.getElementById('cbm').value;
+ const output=`═══════════════════════════════════════
+        PACKING LIST
+═══════════════════════════════════════
+
+Shipper/Exporter: ${s}
+Consignee:        ${c}
+Invoice #:        ${i}
+Date:             ${d}
+
+──────────────────────────────────────
+Item Description      Qty   Wt(kg)  CBM
+──────────────────────────────────────
+${desc.padEnd(20)} ${q.padEnd(5)} ${w.padEnd(6)} ${cbm}
+
+──────────────────────────────────────
+Total Packages:       ${q}
+Total Weight:         ${w} kg
+Total Volume:         ${cbm} CBM
+──────────────────────────────────────
+
+FreightNerd.com — Free Logistics Tools
+`;
+ document.getElementById('packingListOutput').textContent=output;
+ document.getElementById('packingListOutput').style.display='block';
+}
+</script>
+</body>
+</html>
