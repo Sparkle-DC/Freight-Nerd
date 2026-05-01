@@ -3,215 +3,40 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="description" content="Free Freight Class & Density Calculator (NMFC) 2026 - Calculate density and get accurate NMFC freight class instantly. Perfect for LTL shipping.">
- <title>Freight Class & Density Calculator (NMFC) | FreightNerd</title>
+ <meta name="description" content="Free freight class and density calculator for LTL shipping. Estimate pounds per cubic foot and density-based NMFC freight class for palletized freight.">
+ <title>Freight Class & Density Calculator for LTL Shipping | FreightNerd</title>
  <base href="/Freight-Nerd/">
  <script src="https://cdn.tailwindcss.com"></script>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
- <style>
- @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
- body { font-family: 'Inter', system-ui, sans-serif; }
- .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
- </style>
+ <script type="application/ld+json">
+ {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"What is freight class?","acceptedAnswer":{"@type":"Answer","text":"Freight class is an LTL shipping classification used in the United States. It helps carriers price shipments based on density, handling, stowability and liability."}},
+  {"@type":"Question","name":"How do you calculate freight density?","acceptedAnswer":{"@type":"Answer","text":"Freight density is calculated by dividing shipment weight in pounds by shipment volume in cubic feet."}},
+  {"@type":"Question","name":"Does density always determine freight class?","acceptedAnswer":{"@type":"Answer","text":"No. Density is important, but NMFC freight class can also depend on handling, stowability, liability and commodity rules."}},
+  {"@type":"Question","name":"Why does freight class matter?","acceptedAnswer":{"@type":"Answer","text":"Freight class affects LTL pricing. A higher class usually costs more, while dense and easier-to-handle freight often has a lower class."}},
+  {"@type":"Question","name":"Can a carrier reclassify my shipment?","acceptedAnswer":{"@type":"Answer","text":"Yes. Carriers may inspect and reclassify shipments if the declared class, weight, dimensions or commodity information is inaccurate."}}
+ ]}
+ </script>
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
 </head>
-<body class="bg-gray-50">
-
+<body class="bg-gray-50 text-gray-900">
  <div class="max-w-6xl mx-auto px-4 py-8">
- <!-- Header -->
- <div class="flex items-center justify-between mb-8">
- <div class="flex items-center gap-3">
- <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
- </div>
- <a href="/Freight-Nerd/#tools" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
- <i class="fas fa-th-large"></i> All Tools
- </a>
- </div>
-
+ <div class="flex items-center justify-between mb-8"><a href="/Freight-Nerd/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a><div class="flex gap-4 text-sm font-medium"><a href="/Freight-Nerd/" class="text-emerald-600 hover:text-emerald-700">All Tools</a><a href="/Freight-Nerd/faq.html" class="text-gray-500 hover:text-emerald-700">FAQ</a></div></div>
+ <div class="mb-8 max-w-3xl"><p class="text-sm font-semibold text-emerald-600 mb-2">FREE LTL TOOL</p><h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Freight Class & Density Calculator for LTL Shipping</h1><p class="text-lg text-gray-600">Calculate shipment density in pounds per cubic foot and estimate a density-based freight class for LTL planning. Use this before requesting rates, comparing quotes or checking reclassification risk.</p></div>
  <div class="grid lg:grid-cols-2 gap-8">
- <!-- Calculator -->
- <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- <div class="flex items-center gap-3 mb-6">
- <i class="fas fa-boxes-stacked text-4xl text-emerald-600"></i>
- <div>
- <h1 class="text-3xl font-semibold text-gray-900">Freight Class & Density Calculator</h1>
- <p class="text-gray-600">Instant NMFC class for LTL shipping • 2026 rates</p>
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100"><div class="flex items-center gap-3 mb-6"><i class="fas fa-boxes-stacked text-4xl text-emerald-600"></i><div><h2 class="text-3xl font-semibold text-gray-900">Calculate Freight Class</h2><p class="text-gray-600">Estimate density-based LTL class</p></div></div><div class="space-y-8"><div><h3 class="font-medium text-gray-700 mb-4 flex items-center gap-2"><i class="fas fa-ruler-combined"></i> Dimensions</h3><div class="grid grid-cols-3 gap-4"><div><label class="block text-sm font-medium text-gray-600 mb-1">Length</label><input id="length" type="number" min="0" step="0.01" value="48" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Width</label><input id="width" type="number" min="0" step="0.01" value="48" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Height</label><input id="height" type="number" min="0" step="0.01" value="48" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div></div></div><div class="grid grid-cols-2 gap-6"><div><label class="block text-sm font-medium text-gray-600 mb-1">Unit</label><div class="flex bg-gray-100 rounded-2xl p-1"><button onclick="setUnit('inches')" id="btn-inches" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all bg-white shadow-sm">Inches</button><button onclick="setUnit('cm')" id="btn-cm" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all">Centimeters</button></div></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Weight</label><div class="flex gap-3"><input id="weight" type="number" min="0" step="0.01" value="250" class="flex-1 px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"><select id="weightUnit" class="px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"><option value="lbs">lbs</option><option value="kg">kg</option></select></div></div></div><button onclick="calculateFreightClass()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3"><i class="fas fa-calculator"></i> Calculate Freight Class</button></div></div>
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100"><h2 class="text-2xl font-semibold mb-6">Freight Class Results</h2><div id="resultContent" class="space-y-6"></div><div class="mt-8 pt-8 border-t text-xs text-gray-500 flex items-center justify-between"><div>Density-based estimate only. Verify NMFC class.</div><button onclick="copyResults()" class="flex items-center gap-1 text-emerald-600 hover:text-emerald-700"><i class="fas fa-copy"></i> Copy</button></div></div>
  </div>
- </div>
-
- <div class="space-y-8">
- <!-- Dimensions -->
- <div>
- <h3 class="font-medium text-gray-700 mb-4 flex items-center gap-2"><i class="fas fa-ruler-combined"></i> Dimensions</h3>
- <div class="grid grid-cols-3 gap-4">
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Length</label>
- <input id="length" type="number" value="48" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Width</label>
- <input id="width" type="number" value="48" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Height</label>
- <input id="height" type="number" value="48" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
- </div>
- </div>
-
- <!-- Units & Weight -->
- <div class="grid grid-cols-2 gap-6">
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Unit</label>
- <div class="flex bg-gray-100 rounded-2xl p-1">
- <button onclick="setUnit('inches')" id="btn-inches" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all bg-white shadow-sm">Inches</button>
- <button onclick="setUnit('cm')" id="btn-cm" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all">Centimeters</button>
- </div>
- </div>
-
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Weight (per piece)</label>
- <div class="flex gap-3">
- <input id="weight" type="number" value="250" class="flex-1 px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- <select id="weightUnit" class="px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- <option value="lbs">lbs</option>
- <option value="kg">kg</option>
- </select>
- </div>
- </div>
- </div>
-
- <button onclick="calculateFreightClass()"
- class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
- <i class="fas fa-calculator"></i>
- Calculate Freight Class
- </button>
- </div>
- </div>
-
- <!-- Results -->
- <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- <h2 class="text-2xl font-semibold mb-6">Your Results</h2>
- <div id="resultContent" class="space-y-6"></div>
-
- <div class="mt-8 pt-8 border-t text-xs text-gray-500 flex items-center justify-between">
- <div>Accurate as of 2026 NMFC standards</div>
- <button onclick="copyResults()" class="flex items-center gap-1 text-emerald-600 hover:text-emerald-700">
- <i class="fas fa-copy"></i> Copy
- </button>
- </div>
- </div>
- </div>
-
- <!-- Mobile Results -->
  <div id="mobileResults" class="lg:hidden mt-8"></div>
-
- <!-- Quick Explanation -->
- <div class="mt-16 max-w-3xl mx-auto text-center">
- <h2 class="text-2xl font-semibold mb-4">How Freight Class Works</h2>
- <p class="text-gray-600 leading-relaxed">
- Freight class is determined by density (weight per cubic foot). Higher density = lower class = lower shipping rates.
- Use this calculator to avoid costly reclassification fees from carriers like FedEx Freight, Old Dominion, or XPO.
- </p>
+ <section class="mt-14 grid lg:grid-cols-3 gap-6"><div class="bg-white rounded-3xl border border-gray-100 p-6 lg:col-span-2"><h2 class="text-2xl font-bold mb-3">What is freight class?</h2><p class="text-gray-600 leading-relaxed">Freight class is a classification system used for LTL shipping in the United States. It helps carriers price shipments based on how dense, easy to handle, easy to stow and risky the freight is.</p><p class="text-gray-600 leading-relaxed mt-3">Density is one of the biggest inputs, but it is not the only factor. Commodity rules, liability, handling difficulty and stowability can all affect the final NMFC class.</p></div><div class="bg-emerald-50 rounded-3xl border border-emerald-100 p-6"><h2 class="text-xl font-bold mb-3">Density Formula</h2><p class="text-gray-700 mb-3">For LTL density:</p><div class="bg-white rounded-2xl p-4 font-semibold text-emerald-700 text-sm">Weight ÷ Cubic Feet = lbs per cu ft</div><p class="text-gray-600 text-sm mt-4">Higher density usually means lower freight class, but carrier and NMFC rules still apply.</p></div></section>
+ <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-4">Why freight density matters</h2><div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-gray-600"><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">LTL pricing</h3><p>Freight class affects the rate carriers apply to many LTL shipments.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Reclassification risk</h3><p>Wrong dimensions, weight or class can trigger carrier adjustments.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Quote accuracy</h3><p>Checking density before quoting helps avoid margin surprises.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Packaging choices</h3><p>Reducing wasted space can improve density and potentially lower class.</p></div></div></section>
+ <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-5">Freight Class Calculator FAQ</h2><div class="space-y-5"><div><h3 class="font-semibold text-gray-900">Is this an official NMFC freight class?</h3><p class="text-gray-600">No. This tool gives a density-based planning estimate. Official class may depend on NMFC commodity rules and carrier review.</p></div><div><h3 class="font-semibold text-gray-900">How do I calculate freight density?</h3><p class="text-gray-600">Convert the shipment volume to cubic feet, then divide weight in pounds by cubic feet.</p></div><div><h3 class="font-semibold text-gray-900">Does higher density mean lower freight class?</h3><p class="text-gray-600">Usually yes. Dense freight often receives a lower class than bulky lightweight freight, but commodity-specific rules can override density.</p></div><div><h3 class="font-semibold text-gray-900">Can the carrier change my freight class?</h3><p class="text-gray-600">Yes. Carriers can inspect, weigh, dimension and reclassify shipments if the submitted details are inaccurate.</p></div></div></section>
+ <section class="mt-8 flex flex-wrap gap-3"><a href="/Freight-Nerd/tools/cbm-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try CBM Calculator</a><a href="/Freight-Nerd/tools/dim-weight-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try DIM Weight Calculator</a><a href="/Freight-Nerd/tools/rate-per-mile-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try Rate Per Mile Calculator</a></section>
  </div>
- </div>
-
  <script>
- let currentUnit = 'inches';
-
- function setUnit(unit) {
- currentUnit = unit;
- document.getElementById('btn-inches').classList.toggle('bg-white', unit === 'inches');
- document.getElementById('btn-inches').classList.toggle('shadow-sm', unit === 'inches');
- document.getElementById('btn-cm').classList.toggle('bg-white', unit === 'cm');
- document.getElementById('btn-cm').classList.toggle('shadow-sm', unit === 'cm');
- }
-
- function calculateFreightClass() {
- const length = parseFloat(document.getElementById('length').value) || 0;
- const width = parseFloat(document.getElementById('width').value) || 0;
- const height = parseFloat(document.getElementById('height').value) || 0;
- let weight = parseFloat(document.getElementById('weight').value) || 0;
- const weightUnit = document.getElementById('weightUnit').value;
-
- let lengthIn = currentUnit === 'cm' ? length / 2.54 : length;
- let widthIn = currentUnit === 'cm' ? width / 2.54 : width;
- let heightIn = currentUnit === 'cm' ? height / 2.54 : height;
-
- if (weightUnit === 'kg') weight = weight * 2.20462;
-
- const volumeCuIn = lengthIn * widthIn * heightIn;
- const volumeCuFt = volumeCuIn / 1728;
- const density = volumeCuFt > 0 ? weight / volumeCuFt : 0;
-
- let freightClass = 500;
- let className = 'Class 500';
-
- if (density >= 50) { freightClass = 50; className = 'Class 50'; }
- else if (density >= 35) { freightClass = 55; className = 'Class 55'; }
- else if (density >= 30) { freightClass = 60; className = 'Class 60'; }
- else if (density >= 22.5) { freightClass = 65; className = 'Class 65'; }
- else if (density >= 15) { freightClass = 70; className = 'Class 70'; }
- else if (density >= 13.5) { freightClass = 77.5; className = 'Class 77.5'; }
- else if (density >= 12) { freightClass = 85; className = 'Class 85'; }
- else if (density >= 10) { freightClass = 92.5; className = 'Class 92.5'; }
- else if (density >= 8) { freightClass = 100; className = 'Class 100'; }
- else if (density >= 6) { freightClass = 110; className = 'Class 110'; }
- else if (density >= 4) { freightClass = 125; className = 'Class 125'; }
- else if (density >= 2) { freightClass = 150; className = 'Class 150'; }
- else if (density >= 1) { freightClass = 175; className = 'Class 175'; }
-
- const resultHTML = `
- <div class="grid grid-cols-2 gap-4">
- <div class="bg-emerald-50 rounded-2xl p-6 text-center">
- <p class="text-sm text-emerald-700 font-medium">VOLUME</p>
- <p class="text-5xl font-semibold text-emerald-600">${volumeCuFt.toFixed(2)}</p>
- <p class="text-sm text-gray-600">cubic feet</p>
- </div>
- <div class="bg-amber-50 rounded-2xl p-6 text-center">
- <p class="text-sm text-amber-700 font-medium">DENSITY</p>
- <p class="text-5xl font-semibold text-amber-600">${density.toFixed(1)}</p>
- <p class="text-sm text-gray-600">lbs / cu ft</p>
- </div>
- </div>
-
- <div class="mt-8 text-center bg-white border border-gray-200 rounded-3xl p-8">
- <p class="text-sm uppercase tracking-widest text-gray-500 mb-1">Your Freight Class</p>
- <p class="text-6xl font-bold text-gray-900">${className}</p>
- <p class="mt-2 text-emerald-600 font-medium">Lower class = lower shipping cost</p>
- </div>
-
- <div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5">
- <strong>Tip:</strong> If your actual class is higher than this density class, you may be overpaying.
- Many carriers re-classify shipments — always verify with your carrier.
- </div>
- `;
-
- document.getElementById('resultContent').innerHTML = resultHTML;
- document.getElementById('results').classList.remove('hidden');
- document.getElementById('mobileResults').innerHTML = `
- <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- ${resultHTML}
- </div>`;
- }
-
- function copyResults() {
- const text = document.getElementById('resultContent').innerText;
- navigator.clipboard.writeText(text).then(() => {
- alert('Results copied to clipboard!');
- });
- }
-
- document.querySelectorAll('input, select').forEach(el => {
- el.addEventListener('input', () => {
- if (document.getElementById('length').value &&
- document.getElementById('width').value &&
- document.getElementById('height').value) {
- calculateFreightClass();
- }
- });
- });
-
- window.onload = () => calculateFreightClass();
+ let currentUnit='inches';function setUnit(unit){currentUnit=unit;document.getElementById('btn-inches').classList.toggle('bg-white',unit==='inches');document.getElementById('btn-inches').classList.toggle('shadow-sm',unit==='inches');document.getElementById('btn-cm').classList.toggle('bg-white',unit==='cm');document.getElementById('btn-cm').classList.toggle('shadow-sm',unit==='cm')}
+ function calculateFreightClass(){const length=Math.max(0,parseFloat(document.getElementById('length').value)||0),width=Math.max(0,parseFloat(document.getElementById('width').value)||0),height=Math.max(0,parseFloat(document.getElementById('height').value)||0);let weight=Math.max(0,parseFloat(document.getElementById('weight').value)||0);const weightUnit=document.getElementById('weightUnit').value;let lengthIn=currentUnit==='cm'?length/2.54:length,widthIn=currentUnit==='cm'?width/2.54:width,heightIn=currentUnit==='cm'?height/2.54:height;if(weightUnit==='kg')weight=weight*2.20462;const volumeCuIn=lengthIn*widthIn*heightIn,volumeCuFt=volumeCuIn/1728,density=volumeCuFt>0?weight/volumeCuFt:0;let className='Class 500';if(density>=50)className='Class 50';else if(density>=35)className='Class 55';else if(density>=30)className='Class 60';else if(density>=22.5)className='Class 65';else if(density>=15)className='Class 70';else if(density>=13.5)className='Class 77.5';else if(density>=12)className='Class 85';else if(density>=10)className='Class 92.5';else if(density>=8)className='Class 100';else if(density>=6)className='Class 110';else if(density>=4)className='Class 125';else if(density>=2)className='Class 150';else if(density>=1)className='Class 175';const resultHTML=`<div class="grid grid-cols-2 gap-4"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">VOLUME</p><p class="text-5xl font-semibold text-emerald-600">${volumeCuFt.toFixed(2)}</p><p class="text-sm text-gray-600">cubic feet</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">DENSITY</p><p class="text-5xl font-semibold text-amber-600">${density.toFixed(1)}</p><p class="text-sm text-gray-600">lbs / cu ft</p></div></div><div class="mt-8 text-center bg-white border border-gray-200 rounded-3xl p-8"><p class="text-sm uppercase tracking-widest text-gray-500 mb-1">Density-Based Class Estimate</p><p class="text-6xl font-bold text-gray-900">${className}</p><p class="mt-2 text-emerald-600 font-medium">Verify commodity-specific NMFC rules before shipping.</p></div><div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5"><strong>Tip:</strong> If the shipment is reweighed, remeasured or commodity-classed differently, the final carrier class may change.</div>`;document.getElementById('resultContent').innerHTML=resultHTML;document.getElementById('results').classList.remove('hidden');document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${resultHTML}</div>`}
+ function copyResults(){const text=document.getElementById('resultContent').innerText;navigator.clipboard.writeText(text).then(()=>alert('Results copied to clipboard.'))}document.querySelectorAll('input, select').forEach(el=>{el.addEventListener('input',calculateFreightClass);el.addEventListener('change',calculateFreightClass)});window.onload=calculateFreightClass;
  </script>
 </body>
 </html>
