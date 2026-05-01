@@ -3,7 +3,7 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
- <meta name="description" content="Free Freight Calculators & Logistics Tools 2026 — CBM, Freight Class, DIM Weight, Pallet, Landed Cost, Profit. No signup. No ads.">
+ <meta name="description" content="Free freight calculators and logistics tools — CBM, freight class, DIM weight, pallet planning, landed cost, profit and more. No signup.">
  <title>FreightNerd — Free Freight Calculators & Logistics Tools</title>
  <base href="/Freight-Nerd/">
  <script src="https://cdn.tailwindcss.com"></script>
@@ -12,342 +12,65 @@
  @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
  * { -webkit-tap-highlight-color: transparent; }
  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; overscroll-behavior: none; -webkit-font-smoothing: antialiased; }
-
- /* Smooth scroll for the whole page */
  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-
- /* Hero gradient */
  .hero-grad { background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #0f766e 100%); }
-
- /* Card */
  .tool-card { background: white; border: 1px solid #f1f5f9; transition: all 0.25s cubic-bezier(0.4,0,0.2,1); cursor: pointer; }
  .tool-card:active { transform: scale(0.97); background: #f0fdfa; }
  @media (hover: hover) { .tool-card:hover { transform: translateY(-3px); border-color: #a7f3d0; box-shadow: 0 12px 40px -12px rgba(5,150,105,0.2); } }
-
- /* Category chips */
  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 500; transition: all 0.2s; white-space: nowrap; cursor: pointer; border: 1.5px solid transparent; }
  .chip-active { background: #059669; color: white; }
  .chip-inactive { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
  @media (hover: hover) { .chip-inactive:hover { background: #e2e8f0; } }
-
- /* Search */
  .search-box { background: white; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 14px 20px; font-size: 16px; width: 100%; outline: none; transition: border 0.2s; }
  .search-box:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.1); }
-
- /* Bottom nav mobile */
  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; z-index: 100; padding: 6px 0 env(safe-area-inset-bottom,6px); display: flex; justify-content: space-around; }
  .bottom-nav a { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: #64748b; text-decoration: none; padding: 4px 12px; }
  .bottom-nav a.active { color: #059669; }
  .bottom-nav a i { font-size: 20px; }
-
- /* Stats */
  .stat-box { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 16px; }
-
- /* Scroll fade-in */
  .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
  .fade-in.visible { opacity: 1; transform: translateY(0); }
-
- @media (max-width: 640px) {
-  .hero-text { font-size: 2.25rem; line-height: 1.2; }
-  .hero-sub { font-size: 1rem; }
-  .search-box { padding: 12px 16px; }
- }
-
- @media (min-width: 641px) {
-  .bottom-nav { display: none; }
-  body { padding-bottom: 0 !important; }
- }
- /* No bottom nav padding on desktop */
- @media (max-width: 640px) { body { padding-bottom: 68px; } }
+ @media (max-width: 640px) { .hero-text { font-size: 2.25rem; line-height: 1.2; } .hero-sub { font-size: 1rem; } .search-box { padding: 12px 16px; } body { padding-bottom: 68px; } }
+ @media (min-width: 641px) { .bottom-nav { display: none; } body { padding-bottom: 0 !important; } }
  </style>
 </head>
 <body class="bg-gray-50">
- <!-- Header -->
  <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-   <div class="flex items-center gap-2">
-    <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-sm">FN</div>
-    <span class="text-xl font-bold text-gray-900 tracking-tight">FreightNerd</span>
-   </div>
-   <!-- Desktop nav -->
+   <div class="flex items-center gap-2"><div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-sm">FN</div><span class="text-xl font-bold text-gray-900 tracking-tight">FreightNerd</span></div>
    <nav class="hidden md:flex items-center gap-1">
     <a href="/Freight-Nerd/#tools" class="px-4 py-2 rounded-2xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition">All Tools</a>
-    <a href="#tools" class="px-4 py-2 rounded-2xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition">Calculators</a>
     <a href="/Freight-Nerd/about.html" class="px-4 py-2 rounded-2xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition">About</a>
+    <a href="/Freight-Nerd/disclaimer.html" class="px-4 py-2 rounded-2xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition">Disclaimer</a>
     <a href="/Freight-Nerd/contact.html" class="px-5 py-2 rounded-2xl text-sm font-medium bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition">Contact</a>
    </nav>
   </div>
  </header>
-
- <!-- Hero Section -->
  <section class="hero-grad text-white overflow-hidden relative">
-  <!-- Decorative dots -->
   <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 20px 20px, white 1.5px, transparent 0); background-size: 40px 40px;"></div>
   <div class="max-w-6xl mx-auto px-4 py-16 md:py-24 relative z-10">
    <div class="text-center max-w-3xl mx-auto">
-    <!-- Badge -->
-    <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 text-sm font-medium mb-6">
-     <span class="w-2 h-2 bg-emerald-300 rounded-full animate-pulse"></span>
-     Free Tools — No signup required
-    </div>
-
-    <h1 class="hero-text text-5xl md:text-7xl font-bold leading-[1.1] mb-5 tracking-tight">
-     Logistics Tools<br>
-     <span class="text-emerald-200">Built for Speed.</span>
-    </h1>
-    <p class="hero-sub text-lg md:text-xl text-emerald-100/90 mb-8 max-w-xl mx-auto leading-relaxed">
-     CBM, Freight Class, DIM Weight, Pallet planning, Landed Cost &amp; Profit — all free, all instant.
-    </p>
-
-    <!-- CTA -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
-     <a href="#tools" class="inline-flex items-center gap-3 bg-white text-gray-900 hover:bg-emerald-50 font-semibold px-8 py-4 rounded-2xl text-lg transition-all shadow-lg shadow-black/10 active:scale-[0.97]">
-      <i class="fas fa-tools"></i> Browse All Tools
-      <i class="fas fa-arrow-down text-sm text-emerald-500"></i>
-     </a>
-     <a href="/Freight-Nerd/tools/freight-class-density-calculator.html" class="inline-flex items-center gap-2 text-white/80 hover:text-white font-medium px-6 py-4 transition">
-      <i class="fas fa-calculator"></i> Most Popular
-      <i class="fas fa-arrow-right text-xs"></i>
-     </a>
-    </div>
-
-    <!-- Stats row -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-     <div class="stat-box text-center">
-      <div class="text-2xl font-bold">17</div>
-      <div class="text-xs text-emerald-200/80 mt-1">Free Tools</div>
-     </div>
-     <div class="stat-box text-center">
-      <div class="text-2xl font-bold">∞</div>
-      <div class="text-xs text-emerald-200/80 mt-1">No Limits</div>
-     </div>
-     <div class="stat-box text-center">
-      <div class="text-2xl font-bold">0</div>
-      <div class="text-xs text-emerald-200/80 mt-1">Signups Needed</div>
-     </div>
-     <div class="stat-box text-center">
-      <div class="text-2xl font-bold">$0</div>
-      <div class="text-xs text-emerald-200/80 mt-1">Always Free</div>
-     </div>
-    </div>
+    <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 text-sm font-medium mb-6"><span class="w-2 h-2 bg-emerald-300 rounded-full animate-pulse"></span>Free Tools — No signup required</div>
+    <h1 class="hero-text text-5xl md:text-7xl font-bold leading-[1.1] mb-5 tracking-tight">Logistics Tools<br><span class="text-emerald-200">Built for Speed.</span></h1>
+    <p class="hero-sub text-lg md:text-xl text-emerald-100/90 mb-8 max-w-xl mx-auto leading-relaxed">CBM, Freight Class, DIM Weight, Pallet planning, Landed Cost &amp; Profit — all free, all instant.</p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"><a href="#tools" class="inline-flex items-center gap-3 bg-white text-gray-900 hover:bg-emerald-50 font-semibold px-8 py-4 rounded-2xl text-lg transition-all shadow-lg shadow-black/10 active:scale-[0.97]"><i class="fas fa-tools"></i> Browse All Tools</a><a href="/Freight-Nerd/tools/freight-class-density-calculator.html" class="inline-flex items-center gap-2 text-white/80 hover:text-white font-medium px-6 py-4 transition"><i class="fas fa-calculator"></i> Most Popular</a></div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3"><div class="stat-box text-center"><div class="text-2xl font-bold">17</div><div class="text-xs text-emerald-200/80 mt-1">Free Tools</div></div><div class="stat-box text-center"><div class="text-2xl font-bold">∞</div><div class="text-xs text-emerald-200/80 mt-1">No Limits</div></div><div class="stat-box text-center"><div class="text-2xl font-bold">0</div><div class="text-xs text-emerald-200/80 mt-1">Signups Needed</div></div><div class="stat-box text-center"><div class="text-2xl font-bold">$0</div><div class="text-xs text-emerald-200/80 mt-1">Always Free</div></div></div>
    </div>
   </div>
-  <!-- Bottom fade -->
   <div class="h-8 bg-gradient-to-t from-gray-50 to-transparent relative z-10"></div>
  </section>
-
- <!-- Tools Section -->
  <section id="tools" class="max-w-6xl mx-auto px-4 py-8 md:py-16">
-  <!-- Section Header -->
-  <div class="flex items-center justify-between mb-6">
-   <div>
-    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 tracking-tight">All Tools</h2>
-    <p class="text-gray-500 mt-1 text-sm md:text-base">17 calculators &amp; utilities for shipping pros</p>
-   </div>
-   <span id="toolCount" class="text-sm text-gray-400 font-medium">17 tools</span>
-  </div>
-
-  <!-- Search -->
-  <div class="relative mb-5">
-   <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none"></i>
-   <input id="toolSearch" type="search" placeholder="Search tools..." class="search-box pl-12" autocomplete="off">
-  </div>
-
-  <!-- Category chips -->
-  <div id="categoryChips" class="flex gap-2 overflow-x-auto pb-3 scrollbar-hide -mx-4 px-4" style="scrollbar-width:none;-ms-overflow-style:none;">
-   <span class="chip chip-active" data-cat="all">All</span>
-   <span class="chip chip-inactive" data-cat="shipping">📦 Shipping</span>
-   <span class="chip chip-inactive" data-cat="trucking">🚛 Trucking</span>
-   <span class="chip chip-inactive" data-cat="international">🌍 International</span>
-   <span class="chip chip-inactive" data-cat="finance">💰 Finance</span>
-   <span class="chip chip-inactive" data-cat="utilities">⚙️ Utilities</span>
-  </div>
-
-  <!-- Tool Grid -->
-  <div id="toolGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mt-4">
-   <!-- Tools rendered by JS -->
-  </div>
+  <div class="flex items-center justify-between mb-6"><div><h2 class="text-2xl md:text-4xl font-bold text-gray-900 tracking-tight">All Tools</h2><p class="text-gray-500 mt-1 text-sm md:text-base">17 calculators &amp; utilities for shipping pros</p></div><span id="toolCount" class="text-sm text-gray-400 font-medium">17 tools</span></div>
+  <div class="relative mb-5"><i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none"></i><input id="toolSearch" type="search" placeholder="Search tools..." class="search-box pl-12" autocomplete="off"></div>
+  <div id="categoryChips" class="flex gap-2 overflow-x-auto pb-3 scrollbar-hide -mx-4 px-4" style="scrollbar-width:none;-ms-overflow-style:none;"><span class="chip chip-active" data-cat="all">All</span><span class="chip chip-inactive" data-cat="shipping">📦 Shipping</span><span class="chip chip-inactive" data-cat="trucking">🚛 Trucking</span><span class="chip chip-inactive" data-cat="international">🌍 International</span><span class="chip chip-inactive" data-cat="finance">💰 Finance</span><span class="chip chip-inactive" data-cat="utilities">⚙️ Utilities</span></div>
+  <div id="toolGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mt-4"></div>
  </section>
-
- <!-- Why Section -->
- <section class="bg-white py-12 md:py-20">
-  <div class="max-w-6xl mx-auto px-4">
-   <div class="text-center mb-10">
-    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 tracking-tight">Why FreightNerd?</h2>
-    <p class="text-gray-500 mt-2">No fluff. Just tools that work.</p>
-   </div>
-   <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    <div class="bg-gray-50 rounded-3xl p-6 fade-in">
-     <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-xl mb-4"><i class="fas fa-bolt"></i></div>
-     <h3 class="font-semibold text-gray-900 mb-1">Instant Results</h3>
-     <p class="text-sm text-gray-500 leading-relaxed">Type in numbers, get answers immediately. No loading, no waiting.</p>
-    </div>
-    <div class="bg-gray-50 rounded-3xl p-6 fade-in">
-     <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-xl mb-4"><i class="fas fa-mobile-alt"></i></div>
-     <h3 class="font-semibold text-gray-900 mb-1">Mobile First</h3>
-     <p class="text-sm text-gray-500 leading-relaxed">Every tool works perfectly on your phone — even with one hand.</p>
-    </div>
-    <div class="bg-gray-50 rounded-3xl p-6 fade-in">
-     <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-xl mb-4"><i class="fas fa-lock"></i></div>
-     <h3 class="font-semibold text-gray-900 mb-1">100% Private</h3>
-     <p class="text-sm text-gray-500 leading-relaxed">No signup, no tracking, no data stored. Everything runs in your browser.</p>
-    </div>
-    <div class="bg-gray-50 rounded-3xl p-6 fade-in">
-     <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-xl mb-4"><i class="fas fa-seedling"></i></div>
-     <h3 class="font-semibold text-gray-900 mb-1">Built by a Freight Nerd</h3>
-     <p class="text-sm text-gray-500 leading-relaxed">Real tools for real shipping problems. No corporate BS.</p>
-    </div>
-   </div>
-  </div>
- </section>
-
- <!-- CTA Banner -->
- <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
-  <div class="hero-grad rounded-3xl p-8 md:p-12 text-white text-center relative overflow-hidden">
-   <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 20px 20px, white 1.5px, transparent 0); background-size: 40px 40px;"></div>
-   <div class="relative z-10">
-    <h2 class="text-2xl md:text-4xl font-bold mb-3">Ready to ship smarter?</h2>
-    <p class="text-emerald-100/80 mb-6 max-w-md mx-auto">All 17 tools are free. No account needed. Start calculating in one click.</p>
-    <a href="#tools" class="inline-flex items-center gap-2 bg-white text-emerald-700 hover:bg-emerald-50 font-semibold px-8 py-4 rounded-2xl text-lg transition-all active:scale-[0.97]">
-     <i class="fas fa-tools"></i> Pick a Tool
-    </a>
-   </div>
-  </div>
- </section>
-
- <!-- Footer -->
- <footer class="bg-gray-900 text-white py-10 md:py-14">
-  <div class="max-w-6xl mx-auto px-4">
-   <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
-    <div class="flex items-center gap-3">
-     <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg">FN</div>
-     <span class="text-lg font-bold">FreightNerd</span>
-    </div>
-    <div class="flex gap-6 text-sm text-gray-400">
-     <a href="/Freight-Nerd/#tools" class="hover:text-white transition">Tools</a>
-     <a href="/Freight-Nerd/about.html" class="hover:text-white transition">About</a>
-     <a href="/Freight-Nerd/contact.html" class="hover:text-white transition">Contact</a>
-    </div>
-   </div>
-   <div class="border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-    &copy; 2026 FreightNerd. All tools are free and run entirely in your browser.
-   </div>
-  </div>
- </footer>
-
- <!-- Mobile Bottom Nav -->
- <nav class="bottom-nav md:hidden">
-  <a href="#" class="active"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="/Freight-Nerd/#tools"><i class="fas fa-tools"></i><span>Tools</span></a>
-  <a href="#tools" class="scroll-link"><i class="fas fa-search"></i><span>Search</span></a>
-  <a href="/Freight-Nerd/about.html"><i class="fas fa-info-circle"></i><span>About</span></a>
- </nav>
-
+ <section class="bg-white py-12 md:py-20"><div class="max-w-6xl mx-auto px-4"><div class="text-center mb-10"><h2 class="text-2xl md:text-4xl font-bold text-gray-900 tracking-tight">Why FreightNerd?</h2><p class="text-gray-500 mt-2">No fluff. Just tools that work.</p></div><div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"><div class="bg-gray-50 rounded-3xl p-6 fade-in"><div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-xl mb-4"><i class="fas fa-bolt"></i></div><h3 class="font-semibold text-gray-900 mb-1">Instant Results</h3><p class="text-sm text-gray-500 leading-relaxed">Type in numbers, get answers immediately. No loading, no waiting.</p></div><div class="bg-gray-50 rounded-3xl p-6 fade-in"><div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-xl mb-4"><i class="fas fa-mobile-alt"></i></div><h3 class="font-semibold text-gray-900 mb-1">Mobile First</h3><p class="text-sm text-gray-500 leading-relaxed">Every tool works cleanly on your phone.</p></div><div class="bg-gray-50 rounded-3xl p-6 fade-in"><div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-xl mb-4"><i class="fas fa-lock"></i></div><h3 class="font-semibold text-gray-900 mb-1">Browser Based</h3><p class="text-sm text-gray-500 leading-relaxed">No signup. No server storage. Tools run in your browser. The notepad saves only in your local browser storage.</p></div><div class="bg-gray-50 rounded-3xl p-6 fade-in"><div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-xl mb-4"><i class="fas fa-seedling"></i></div><h3 class="font-semibold text-gray-900 mb-1">Practical Planning</h3><p class="text-sm text-gray-500 leading-relaxed">Built for quick freight estimates, planning checks, and day-to-day logistics math.</p></div></div></div></section>
+ <section class="max-w-6xl mx-auto px-4 py-10 md:py-16"><div class="hero-grad rounded-3xl p-8 md:p-12 text-white text-center relative overflow-hidden"><div class="relative z-10"><h2 class="text-2xl md:text-4xl font-bold mb-3">Ready to ship smarter?</h2><p class="text-emerald-100/80 mb-6 max-w-md mx-auto">All 17 tools are free. No account needed. Start calculating in one click.</p><a href="#tools" class="inline-flex items-center gap-2 bg-white text-emerald-700 hover:bg-emerald-50 font-semibold px-8 py-4 rounded-2xl text-lg transition-all active:scale-[0.97]"><i class="fas fa-tools"></i> Pick a Tool</a></div></div></section>
+ <footer class="bg-gray-900 text-white py-10 md:py-14"><div class="max-w-6xl mx-auto px-4"><div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg">FN</div><span class="text-lg font-bold">FreightNerd</span></div><div class="flex flex-wrap justify-center gap-6 text-sm text-gray-400"><a href="/Freight-Nerd/#tools" class="hover:text-white transition">Tools</a><a href="/Freight-Nerd/about.html" class="hover:text-white transition">About</a><a href="/Freight-Nerd/contact.html" class="hover:text-white transition">Contact</a><a href="/Freight-Nerd/privacy.html" class="hover:text-white transition">Privacy</a><a href="/Freight-Nerd/disclaimer.html" class="hover:text-white transition">Disclaimer</a></div></div><div class="border-t border-gray-800 pt-6 text-center text-sm text-gray-500">&copy; 2026 FreightNerd. Free browser-based freight planning tools.</div></div></footer>
+ <nav class="bottom-nav md:hidden"><a href="#" class="active"><i class="fas fa-home"></i><span>Home</span></a><a href="/Freight-Nerd/#tools"><i class="fas fa-tools"></i><span>Tools</span></a><a href="#tools" class="scroll-link"><i class="fas fa-search"></i><span>Search</span></a><a href="/Freight-Nerd/about.html"><i class="fas fa-info-circle"></i><span>About</span></a></nav>
  <script>
- // ========================
- // TOOL DATA
- // ========================
- const tools = [
-  {name:"CBM Calculator", desc:"Cubic meters for ocean & air freight. Volume instantly.", icon:"fa-cube", cat:"shipping", url:"tools/cbm-calculator.html", popular:true},
-  {name:"Freight Class & Density", desc:"NMFC class based on density. LTL shipping essential.", icon:"fa-boxes-stacked", cat:"shipping", url:"tools/freight-class-density-calculator.html", popular:true},
-  {name:"DIM Weight Calculator", desc:"Dimensional weight for air & parcel carriers.", icon:"fa-weight-hanging", cat:"shipping", url:"tools/dim-weight-calculator.html", popular:false},
-  {name:"Pallet Calculator", desc:"How many boxes fit on a pallet? Instant stacking.", icon:"fa-layer-group", cat:"shipping", url:"tools/pallet-calculator.html", popular:false},
-  {name:"Container Loading Optimizer", desc:"Visual 20ft / 40ft container loading planner.", icon:"fa-ship", cat:"shipping", url:"tools/container-loading-optimizer.html", popular:false},
-  {name:"Packing List Generator", desc:"Professional export packing list in seconds.", icon:"fa-file-export", cat:"international", url:"tools/packing-list-generator.html", popular:false},
-  {name:"Rate Per Mile Calculator", desc:"Break-even rate and profit per mile for truckers.", icon:"fa-truck-fast", cat:"trucking", url:"tools/rate-per-mile-calculator.html", popular:true},
-  {name:"Freight Profit Calculator", desc:"Revenue minus costs = real profit on every load.", icon:"fa-chart-line", cat:"finance", url:"tools/freight-profit-calculator.html", popular:true},
-  {name:"Fuel Surcharge Calculator", desc:"DOE index-based fuel surcharge for trucking.", icon:"fa-gas-pump", cat:"trucking", url:"tools/fuel-surcharge-calculator.html", popular:false},
-  {name:"Landed Cost Estimator", desc:"Total import cost including duties and fees.", icon:"fa-globe", cat:"international", url:"tools/landed-cost-estimator.html", popular:true},
-  {name:"Accessorials Estimator", desc:"Liftgate, detention, residential and more surcharges.", icon:"fa-tags", cat:"trucking", url:"tools/accessorials-surcharge-estimator.html", popular:false},
-  {name:"HS Code & Duty Estimator", desc:"Quick HS code lookup plus duty rates.", icon:"fa-barcode", cat:"international", url:"tools/hs-code-duty-estimator.html", popular:false},
-  {name:"Transit Time Comparator", desc:"Truck vs Ocean vs Air vs Rail — time & cost.", icon:"fa-route", cat:"international", url:"tools/transit-time-mode-comparator.html", popular:false},
-  {name:"Carbon Emissions Calculator", desc:"Estimate CO2 for truck, ocean, air & rail.", icon:"fa-leaf", cat:"utilities", url:"tools/carbon-emissions-calculator.html", popular:false},
-  {name:"Unit Converter", desc:"Inches↔cm, lbs↔kg, CBM↔CFT & more.", icon:"fa-exchange-alt", cat:"utilities", url:"tools/unit-converter.html", popular:false},
-  {name:"Notepad", desc:"Quick notes that auto-save in your browser.", icon:"fa-sticky-note", cat:"utilities", url:"tools/notepad.html", popular:false},
-  {name:"Cold Email Generator", desc:"Broker intro emails for freight sales.", icon:"fa-envelope", cat:"utilities", url:"tools/cold-email-generator.html", popular:false}
- ];
-
- // ========================
- // RENDER
- // ========================
- let activeCategory = 'all';
- let searchQuery = '';
-
- function renderTools() {
-  const grid = document.getElementById('toolGrid');
-  const filtered = tools.filter(t => {
-   const catMatch = activeCategory === 'all' || t.cat === activeCategory;
-   const q = searchQuery.toLowerCase();
-   const searchMatch = !q || t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q);
-   return catMatch && searchMatch;
-  });
-  if (filtered.length === 0) {
-   grid.innerHTML = `<div class="col-span-full text-center py-16"><div class="text-6xl mb-4">🔍</div><p class="text-lg font-medium text-gray-900">No tools found</p><p class="text-sm text-gray-500 mt-1">Try a different search or category</p></div>`;
-  } else {
-   grid.innerHTML = filtered.map((t,i) => `
-    <a href="${t.url}" class="tool-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 block fade-in" style="transition-delay:${i*30}ms">
-     <div class="flex items-start gap-3 sm:gap-4">
-      <div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-lg sm:text-xl shrink-0"><i class="fas ${t.icon}"></i></div>
-      <div class="min-w-0 flex-1">
-       <div class="font-semibold text-base sm:text-lg text-gray-900 mb-0.5 leading-tight">${t.name}</div>
-       <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">${t.desc}</p>
-      </div>
-     </div>
-    </a>
-   `).join('');
-  }
-  document.getElementById('toolCount').textContent = filtered.length + ' tool' + (filtered.length !== 1 ? 's' : '');
-  observeFadeIns();
- }
-
- // ========================
- // CATEGORY FILTER
- // ========================
- document.getElementById('categoryChips').addEventListener('click', function(e) {
-  const chip = e.target.closest('[data-cat]');
-  if (!chip) return;
-  this.querySelectorAll('[data-cat]').forEach(c => { c.className = 'chip chip-inactive'; });
-  chip.className = 'chip chip-active';
-  activeCategory = chip.dataset.cat;
-  renderTools();
- });
-
- // ========================
- // SEARCH
- // ========================
- document.getElementById('toolSearch').addEventListener('input', function() {
-  searchQuery = this.value;
-  renderTools();
- });
-
- // ========================
- // FADE-IN ON SCROLL (Intersection Observer)
- // ========================
- function observeFadeIns() {
-  const observer = new IntersectionObserver((entries) => {
-   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px 60px 0px' });
-  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
- }
-
- // ========================
- // MOBILE SCROLL LINK
- // ========================
- document.querySelectorAll('.scroll-link').forEach(a => {
-  a.addEventListener('click', function(e) {
-   const href = this.getAttribute('href');
-   if (href?.startsWith('#')) {
-    e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-   }
-  });
- });
-
- // ========================
- // INIT
- // ========================
- renderTools();
+ const tools=[{name:"CBM Calculator",desc:"Cubic meters for ocean & air freight. Volume instantly.",icon:"fa-cube",cat:"shipping",url:"tools/cbm-calculator.html"},{name:"Freight Class & Density",desc:"NMFC class based on density. LTL shipping essential.",icon:"fa-boxes-stacked",cat:"shipping",url:"tools/freight-class-density-calculator.html"},{name:"DIM Weight Calculator",desc:"Dimensional weight for air & parcel carriers.",icon:"fa-weight-hanging",cat:"shipping",url:"tools/dim-weight-calculator.html"},{name:"Pallet Calculator",desc:"How many boxes fit on a pallet? Instant stacking.",icon:"fa-layer-group",cat:"shipping",url:"tools/pallet-calculator.html"},{name:"Container Loading Optimizer",desc:"Visual 20ft / 40ft container loading planner.",icon:"fa-ship",cat:"shipping",url:"tools/container-loading-optimizer.html"},{name:"Packing List Generator",desc:"Professional export packing list in seconds.",icon:"fa-file-export",cat:"international",url:"tools/packing-list-generator.html"},{name:"Rate Per Mile Calculator",desc:"Break-even rate and profit per mile for truckers.",icon:"fa-truck-fast",cat:"trucking",url:"tools/rate-per-mile-calculator.html"},{name:"Freight Profit Calculator",desc:"Revenue minus costs = real profit on every load.",icon:"fa-chart-line",cat:"finance",url:"tools/freight-profit-calculator.html"},{name:"Fuel Surcharge Calculator",desc:"DOE index-based fuel surcharge for trucking.",icon:"fa-gas-pump",cat:"trucking",url:"tools/fuel-surcharge-calculator.html"},{name:"Landed Cost Estimator",desc:"Total import cost including duties and fees.",icon:"fa-globe",cat:"international",url:"tools/landed-cost-estimator.html"},{name:"Accessorials Estimator",desc:"Liftgate, detention, residential and more surcharges.",icon:"fa-tags",cat:"trucking",url:"tools/accessorials-surcharge-estimator.html"},{name:"HS Code Planning Helper",desc:"Rough duty scenarios for import planning.",icon:"fa-barcode",cat:"international",url:"tools/hs-code-duty-estimator.html"},{name:"Transit Time Comparator",desc:"Truck vs Ocean vs Air vs Rail — time & cost.",icon:"fa-route",cat:"international",url:"tools/transit-time-mode-comparator.html"},{name:"Carbon Emissions Calculator",desc:"Estimate CO2 for truck, ocean, air & rail.",icon:"fa-leaf",cat:"utilities",url:"tools/carbon-emissions-calculator.html"},{name:"Unit Converter",desc:"Inches↔cm, lbs↔kg, CBM↔CFT & more.",icon:"fa-exchange-alt",cat:"utilities",url:"tools/unit-converter.html"},{name:"Notepad",desc:"Quick notes saved only in your browser.",icon:"fa-sticky-note",cat:"utilities",url:"tools/notepad.html"},{name:"Cold Email Generator",desc:"Simple B2B freight outreach drafts.",icon:"fa-envelope",cat:"utilities",url:"tools/cold-email-generator.html"}];let activeCategory='all';let searchQuery='';function renderTools(){const grid=document.getElementById('toolGrid');const filtered=tools.filter(t=>{const q=searchQuery.toLowerCase();return(activeCategory==='all'||t.cat===activeCategory)&&(!q||t.name.toLowerCase().includes(q)||t.desc.toLowerCase().includes(q))});grid.innerHTML=filtered.length?filtered.map((t,i)=>`<a href="${t.url}" class="tool-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 block fade-in" style="transition-delay:${i*30}ms"><div class="flex items-start gap-3 sm:gap-4"><div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-lg sm:text-xl shrink-0"><i class="fas ${t.icon}"></i></div><div class="min-w-0 flex-1"><div class="font-semibold text-base sm:text-lg text-gray-900 mb-0.5 leading-tight">${t.name}</div><p class="text-xs sm:text-sm text-gray-500 leading-relaxed">${t.desc}</p></div></div></a>`).join(''):`<div class="col-span-full text-center py-16"><div class="text-6xl mb-4">🔍</div><p class="text-lg font-medium text-gray-900">No tools found</p><p class="text-sm text-gray-500 mt-1">Try a different search or category</p></div>`;document.getElementById('toolCount').textContent=filtered.length+' tool'+(filtered.length!==1?'s':'');observeFadeIns()}document.getElementById('categoryChips').addEventListener('click',function(e){const chip=e.target.closest('[data-cat]');if(!chip)return;this.querySelectorAll('[data-cat]').forEach(c=>{c.className='chip chip-inactive'});chip.className='chip chip-active';activeCategory=chip.dataset.cat;renderTools()});document.getElementById('toolSearch').addEventListener('input',function(){searchQuery=this.value;renderTools()});function observeFadeIns(){const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px 60px 0px'});document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>observer.observe(el))}document.querySelectorAll('.scroll-link').forEach(a=>{a.addEventListener('click',function(e){const href=this.getAttribute('href');if(href&&href.startsWith('#')){e.preventDefault();const el=document.querySelector(href);if(el)el.scrollIntoView({behavior:'smooth'})}})});renderTools();
  </script>
 </body>
 </html>
