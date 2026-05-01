@@ -4,61 +4,57 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <base href="/Freight-Nerd/">
- <meta name="description" content="Free CBM Calculator - Calculate cubic meters for ocean and air freight. Instant volume and weight calculations for LCL and air shipments.">
- <title>CBM Calculator | FreightNerd</title>
+ <meta name="description" content="Free CBM calculator for ocean freight, LCL shipping, air freight and warehouse planning. Calculate cubic meters and cubic feet from cm or inches.">
+ <title>CBM Calculator for Ocean Freight, LCL & Air Cargo | FreightNerd</title>
  <script src="https://cdn.tailwindcss.com"></script>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
- <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
+ <script type="application/ld+json">
+ {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"What is CBM in shipping?","acceptedAnswer":{"@type":"Answer","text":"CBM means cubic meter. It measures cargo volume and is commonly used for ocean freight, LCL shipments, air freight planning, warehousing and container loading."}},
+  {"@type":"Question","name":"How do you calculate CBM?","acceptedAnswer":{"@type":"Answer","text":"For measurements in meters, CBM equals length times width times height. For centimeters, multiply length by width by height and divide by 1,000,000. Then multiply by the number of cartons or units."}},
+  {"@type":"Question","name":"What is the formula for CBM in centimeters?","acceptedAnswer":{"@type":"Answer","text":"CBM = length in cm × width in cm × height in cm ÷ 1,000,000 × quantity."}},
+  {"@type":"Question","name":"Is CBM the same as cubic feet?","acceptedAnswer":{"@type":"Answer","text":"No. CBM is cubic meters and CFT is cubic feet. One CBM is about 35.315 cubic feet."}},
+  {"@type":"Question","name":"Is freight charged by CBM or weight?","acceptedAnswer":{"@type":"Answer","text":"It depends on the shipment and carrier. Ocean LCL often uses volume-based charging, while air freight and parcel shipments may compare actual weight with dimensional or volumetric weight."}}
+ ]}
+ </script>
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 text-gray-900">
 <div class="max-w-6xl mx-auto px-4 py-8">
  <div class="flex items-center justify-between mb-8">
   <a href="/Freight-Nerd/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
-  <a href="/Freight-Nerd/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+  <div class="flex gap-4 text-sm font-medium"><a href="/Freight-Nerd/" class="text-emerald-600 hover:text-emerald-700">All Tools</a><a href="/Freight-Nerd/faq.html" class="text-gray-500 hover:text-emerald-700">FAQ</a></div>
+ </div>
+ <div class="mb-8 max-w-3xl">
+  <p class="text-sm font-semibold text-emerald-600 mb-2">FREE FREIGHT TOOL</p>
+  <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">CBM Calculator for Ocean Freight, LCL & Air Cargo</h1>
+  <p class="text-lg text-gray-600">Calculate cubic meters (CBM) and cubic feet from carton dimensions in centimeters or inches. Use it for LCL shipments, ocean freight planning, air cargo estimates, warehousing and pallet/container planning.</p>
  </div>
  <div class="grid lg:grid-cols-2 gap-8">
   <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
-   <div class="flex items-center gap-3 mb-6"><i class="fas fa-cube text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">CBM Calculator</h1><p class="text-gray-600">Cubic Meters for Ocean & Air Freight</p></div></div>
+   <div class="flex items-center gap-3 mb-6"><i class="fas fa-cube text-4xl text-emerald-600"></i><div><h2 class="text-3xl font-semibold text-gray-900">Calculate CBM</h2><p class="text-gray-600">Enter dimensions and quantity</p></div></div>
    <div class="space-y-8">
-    <div><h3 class="font-medium text-gray-700 mb-4"><i class="fas fa-ruler-combined"></i> Dimensions</h3>
-     <div class="grid grid-cols-3 gap-4">
-      <div><label class="block text-sm font-medium text-gray-600 mb-1">Length</label><input id="length" type="number" value="100" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
-      <div><label class="block text-sm font-medium text-gray-600 mb-1">Width</label><input id="width" type="number" value="80" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
-      <div><label class="block text-sm font-medium text-gray-600 mb-1">Height</label><input id="height" type="number" value="60" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
-     </div>
-    </div>
-    <div class="grid grid-cols-2 gap-6">
-     <div><label class="block text-sm font-medium text-gray-600 mb-1">Unit</label>
-      <div class="flex bg-gray-100 rounded-2xl p-1">
-       <button onclick="setUnit('cm')" id="btn-cm" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all bg-white shadow-sm">Centimeters</button>
-       <button onclick="setUnit('inches')" id="btn-inches" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all">Inches</button>
-      </div>
-     </div>
-     <div><label class="block text-sm font-medium text-gray-600 mb-1">Quantity</label><input id="quantity" type="number" value="1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
-    </div>
+    <div><h3 class="font-medium text-gray-700 mb-4"><i class="fas fa-ruler-combined"></i> Dimensions</h3><div class="grid grid-cols-3 gap-4"><div><label class="block text-sm font-medium text-gray-600 mb-1">Length</label><input id="length" type="number" min="0" step="0.01" value="100" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Width</label><input id="width" type="number" min="0" step="0.01" value="80" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Height</label><input id="height" type="number" min="0" step="0.01" value="60" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div></div></div>
+    <div class="grid grid-cols-2 gap-6"><div><label class="block text-sm font-medium text-gray-600 mb-1">Unit</label><div class="flex bg-gray-100 rounded-2xl p-1"><button onclick="setUnit('cm')" id="btn-cm" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all bg-white shadow-sm">Centimeters</button><button onclick="setUnit('inches')" id="btn-inches" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all">Inches</button></div></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Quantity</label><input id="quantity" type="number" min="1" step="1" value="1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div></div>
     <button onclick="calculateCBM()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3"><i class="fas fa-calculator"></i> Calculate CBM</button>
    </div>
   </div>
-  <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
-   <h2 class="text-2xl font-semibold mb-6">Results</h2>
-   <div id="resultContent" class="space-y-6"></div>
-  </div>
+  <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100"><h2 class="text-2xl font-semibold mb-6">CBM Results</h2><div id="resultContent" class="space-y-6"></div></div>
  </div>
  <div id="mobileResults" class="lg:hidden mt-8"></div>
+ <section class="mt-14 grid lg:grid-cols-3 gap-6">
+  <div class="bg-white rounded-3xl border border-gray-100 p-6 lg:col-span-2"><h2 class="text-2xl font-bold mb-3">What is CBM?</h2><p class="text-gray-600 leading-relaxed">CBM means cubic meter. In freight shipping, CBM measures the volume of cargo. It helps forwarders, carriers, warehouse teams and importers understand how much space a shipment needs in a container, truck, aircraft or warehouse.</p><p class="text-gray-600 leading-relaxed mt-3">CBM is especially common in ocean freight and LCL shipping because cargo is often planned and priced by volume. Even when weight matters, volume still affects loading, pallet planning and storage decisions.</p></div>
+  <div class="bg-emerald-50 rounded-3xl border border-emerald-100 p-6"><h2 class="text-xl font-bold mb-3">CBM Formula</h2><p class="text-gray-700 mb-3">For centimeters:</p><div class="bg-white rounded-2xl p-4 font-semibold text-emerald-700 text-sm">Length × Width × Height ÷ 1,000,000 × Quantity</div><p class="text-gray-600 text-sm mt-4">For inches, convert dimensions to meters first, or use the calculator above.</p></div>
+ </section>
+ <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-4">When is CBM used?</h2><div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-gray-600"><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Ocean LCL freight</h3><p>Estimate shipment volume before requesting rates or booking space.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Container planning</h3><p>Compare cargo volume against available space in 20ft and 40ft containers.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Air cargo planning</h3><p>Use volume as part of dimensional or chargeable weight checks.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Warehouse storage</h3><p>Estimate how much storage space cartons or pallets may require.</p></div></div></section>
+ <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-5">CBM Calculator FAQ</h2><div class="space-y-5"><div><h3 class="font-semibold text-gray-900">How do I calculate CBM from centimeters?</h3><p class="text-gray-600">Multiply length × width × height, then divide by 1,000,000. Multiply the result by the number of cartons or units.</p></div><div><h3 class="font-semibold text-gray-900">How many cubic feet are in one CBM?</h3><p class="text-gray-600">One CBM is approximately 35.315 cubic feet.</p></div><div><h3 class="font-semibold text-gray-900">Is CBM used for air freight?</h3><p class="text-gray-600">Yes, but air freight normally uses chargeable weight, which compares actual weight against volumetric or dimensional weight. CBM still helps estimate cargo volume.</p></div><div><h3 class="font-semibold text-gray-900">Is CBM enough to calculate the final freight cost?</h3><p class="text-gray-600">No. Final freight cost can depend on weight, route, carrier, handling, packaging, fuel, surcharges, customs, accessorials and contract rates.</p></div></div></section>
+ <section class="mt-8 flex flex-wrap gap-3"><a href="/Freight-Nerd/tools/dim-weight-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try DIM Weight Calculator</a><a href="/Freight-Nerd/tools/container-loading-optimizer.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try Container Loading Optimizer</a><a href="/Freight-Nerd/tools/freight-class-density-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try Freight Class Calculator</a></section>
 </div>
 <script>
-let currentUnit = 'cm';
+let currentUnit='cm';
 function setUnit(u){currentUnit=u;['btn-cm','btn-inches'].forEach(id=>{const el=document.getElementById(id);el.classList.toggle('bg-white',id==='btn-'+u);el.classList.toggle('shadow-sm',id==='btn-'+u)})}
-function calculateCBM(){
- const l=parseFloat(document.getElementById('length').value)||0,w=parseFloat(document.getElementById('width').value)||0,h=parseFloat(document.getElementById('height').value)||0,q=parseFloat(document.getElementById('quantity').value)||1;
- let lC=currentUnit==='cm'?l/100:l*0.0254,wC=currentUnit==='cm'?w/100:w*0.0254,hC=currentUnit==='cm'?h/100:h*0.0254;
- const cbm=lC*wC*hC,totalCBM=cbm*q,cuft=cbm*35.315,totalCuft=totalCBM*35.315;
- const html=`<div class="grid grid-cols-2 gap-4"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">VOLUME (1 unit)</p><p class="text-5xl font-semibold text-emerald-600">${cbm.toFixed(3)}</p><p class="text-sm text-gray-600">CBM (${cuft.toFixed(1)} cu ft)</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">TOTAL (${q} units)</p><p class="text-5xl font-semibold text-amber-600">${totalCBM.toFixed(3)}</p><p class="text-sm text-gray-600">CBM (${totalCuft.toFixed(1)} cu ft)</p></div></div><div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8"><div class="space-y-3 text-sm"><div class="flex justify-between"><span>Total CBM</span><span class="font-bold text-lg text-emerald-600">${totalCBM.toFixed(3)} CBM</span></div><div class="flex justify-between"><span>Total Cubic Feet</span><span class="font-medium">${totalCuft.toFixed(1)} cu ft</span></div></div></div>`;
- document.getElementById('resultContent').innerHTML=html;document.getElementById('results').classList.remove('hidden');
- document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${html}</div>`;
-}
-document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calculateCBM));
-window.onload=calculateCBM;
+function calculateCBM(){const l=Math.max(0,parseFloat(document.getElementById('length').value)||0),w=Math.max(0,parseFloat(document.getElementById('width').value)||0),h=Math.max(0,parseFloat(document.getElementById('height').value)||0),q=Math.max(1,parseFloat(document.getElementById('quantity').value)||1);let lC=currentUnit==='cm'?l/100:l*0.0254,wC=currentUnit==='cm'?w/100:w*0.0254,hC=currentUnit==='cm'?h/100:h*0.0254;const cbm=lC*wC*hC,totalCBM=cbm*q,cuft=cbm*35.315,totalCuft=totalCBM*35.315;const html=`<div class="grid grid-cols-2 gap-4"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">VOLUME PER UNIT</p><p class="text-5xl font-semibold text-emerald-600">${cbm.toFixed(3)}</p><p class="text-sm text-gray-600">CBM (${cuft.toFixed(1)} cu ft)</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">TOTAL VOLUME</p><p class="text-5xl font-semibold text-amber-600">${totalCBM.toFixed(3)}</p><p class="text-sm text-gray-600">CBM (${totalCuft.toFixed(1)} cu ft)</p></div></div><div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8"><div class="space-y-3 text-sm"><div class="flex justify-between"><span>Total CBM</span><span class="font-bold text-lg text-emerald-600">${totalCBM.toFixed(3)} CBM</span></div><div class="flex justify-between"><span>Total Cubic Feet</span><span class="font-medium">${totalCuft.toFixed(1)} cu ft</span></div><div class="flex justify-between"><span>Quantity</span><span class="font-medium">${q}</span></div></div></div>`;document.getElementById('resultContent').innerHTML=html;document.getElementById('results').classList.remove('hidden');document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${html}</div>`}
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calculateCBM));window.onload=calculateCBM;
 </script>
 </body>
 </html>
