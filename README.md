@@ -1,20 +1,65 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# FreightNerd
 
-# Run and deploy your AI Studio app
+FreightNerd is a static collection of free freight, logistics, and shipping calculators.
 
-This contains everything you need to run your app locally.
+The site is designed to run entirely in the browser. There is no backend, no account system, and no server-side data storage in this repository.
 
-View your app in AI Studio: https://ai.studio/apps/c474d1f6-e479-4cfb-8472-629b6bfac2b6
+## Tools
 
-## Run Locally
+- CBM Calculator
+- Freight Class & Density Calculator
+- DIM Weight Calculator
+- Pallet Calculator
+- Container Loading Optimizer
+- Packing List Generator
+- Rate Per Mile Calculator
+- Freight Profit Calculator
+- Fuel Surcharge Calculator
+- Landed Cost Estimator
+- Accessorials Estimator
+- HS Code Planning Helper
+- Transit Time Comparator
+- Carbon Emissions Calculator
+- Unit Converter
+- Browser Notepad
+- Cold Email Generator
 
-**Prerequisites:**  Node.js
+## Local preview
 
+Because this is a static HTML site, you do not need Node.js or API keys to preview it.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+From the repository root, run a simple local server:
+
+```bash
+python3 -m http.server 8080
+```
+
+Then open:
+
+```text
+http://localhost:8080/
+```
+
+## Deployment
+
+This repo is suitable for GitHub Pages or any static host.
+
+Current pages use the GitHub Pages project path:
+
+```html
+<base href="/Freight-Nerd/">
+```
+
+If deploying to a custom root domain such as `freightnerd.com`, remove that base path and update hardcoded `/Freight-Nerd/` links.
+
+## Privacy model
+
+Most tools calculate directly in the browser and do not send data to a server. The Notepad tool stores notes in the visitor's own browser using `localStorage`. Users should not store passwords, sensitive personal data, confidential shipment documents, or regulated information in the browser notepad.
+
+## Accuracy disclaimer
+
+FreightNerd tools are planning aids only. Freight rates, duties, taxes, fuel surcharges, transit times, and classifications can vary by carrier, lane, country, contract, trade agreement, and current regulations. Always verify important shipment, customs, and pricing decisions with the relevant carrier, broker, customs authority, or qualified professional.
+
+## Security notes
+
+This is a static site. There are no server-side secrets required. Do not commit `.env`, API keys, private customer data, or production credentials to this repository.
