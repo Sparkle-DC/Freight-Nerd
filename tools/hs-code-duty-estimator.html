@@ -3,182 +3,39 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="description" content="Free HS Code + Basic Duty Estimator 2026 - Quick HS code lookup and estimated duty & tax calculator for international shipping. Perfect for exporters and importers.">
- <title>HS Code + Basic Duty Estimator | FreightNerd</title>
+ <meta name="description" content="Free HS Code planning helper and rough duty scenario calculator for international shipping. For planning only; verify with official customs sources.">
+ <title>HS Code Planning Helper | FreightNerd</title>
  <base href="/Freight-Nerd/">
  <script src="https://cdn.tailwindcss.com"></script>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
- <style>
- @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
- body { font-family: 'Inter', system-ui, sans-serif; }
- .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
- </style>
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
 </head>
 <body class="bg-gray-50">
-
  <div class="max-w-6xl mx-auto px-4 py-8">
- <!-- Header -->
- <div class="flex items-center justify-between mb-8">
- <div class="flex items-center gap-3">
- <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
- </div>
- <a href="/Freight-Nerd/#tools" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
- <i class="fas fa-th-large"></i> All Tools
- </a>
- </div>
-
+ <div class="flex items-center justify-between mb-8"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div><a href="/Freight-Nerd/#tools" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a></div>
+ <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-3xl p-5 mb-8 text-sm leading-relaxed"><strong>Planning only:</strong> HS codes, duties, VAT/tax, and trade-agreement treatment vary by destination, origin, product details, and current law. Use this as a rough scenario helper only. Verify final classification and duty with an official customs source or licensed broker.</div>
  <div class="grid lg:grid-cols-2 gap-8">
- <!-- Calculator -->
  <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- <div class="flex items-center gap-3 mb-6">
- <i class="fas fa-barcode text-4xl text-emerald-600"></i>
- <div>
- <h1 class="text-3xl font-semibold text-gray-900">HS Code + Basic Duty Estimator</h1>
- <p class="text-gray-600">2026 International Shipping • Approximate Rates</p>
- </div>
- </div>
-
+ <div class="flex items-center gap-3 mb-6"><i class="fas fa-barcode text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">HS Code Planning Helper</h1><p class="text-gray-600">Rough duty scenarios for import planning</p></div></div>
  <div class="space-y-8">
- <!-- Product Description / Search -->
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Product Description or HS Code</label>
- <input id="searchInput" type="text" placeholder="e.g. T-shirts, electronics, coffee, 6109.10"
- class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
-
- <!-- Common HS Codes (clickable) -->
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-3">Or choose common categories</label>
- <div class="grid grid-cols-2 gap-3 text-sm" id="commonList"></div>
- </div>
-
- <!-- Goods Value -->
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Value of Goods (USD)</label>
- <input id="goodsValue" type="number" value="12500" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
-
- <button onclick="calculateDuty()"
- class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
- <i class="fas fa-calculator"></i>
- Estimate Duty &amp; Tax
- </button>
+ <div><label class="block text-sm font-medium text-gray-600 mb-1">Product Description or HS Code</label><input id="searchInput" type="text" placeholder="e.g. T-shirts, electronics, coffee, 6109.10" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+ <div><label class="block text-sm font-medium text-gray-600 mb-3">Common planning examples</label><div class="grid grid-cols-2 gap-3 text-sm" id="commonList"></div></div>
+ <div><label class="block text-sm font-medium text-gray-600 mb-1">Goods Value (USD)</label><input id="goodsValue" type="number" min="0" step="0.01" value="12500" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
+ <button onclick="calculateDuty()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3"><i class="fas fa-calculator"></i> Build Rough Scenario</button>
  </div>
  </div>
-
- <!-- Results -->
- <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- <h2 class="text-2xl font-semibold mb-6">Estimated Duty &amp; Tax</h2>
- <div id="resultContent" class="space-y-6"></div>
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100"><h2 class="text-2xl font-semibold mb-6">Rough Scenario</h2><div id="resultContent" class="space-y-6"></div></div>
  </div>
- </div>
-
- <!-- Mobile Results -->
  <div id="mobileResults" class="lg:hidden mt-8"></div>
-
- <!-- Quick Explanation -->
- <div class="mt-16 max-w-3xl mx-auto text-center">
- <h2 class="text-2xl font-semibold mb-4">Important Note</h2>
- <p class="text-gray-600 leading-relaxed">
- HS codes and duty rates are approximate (2026 estimates) and vary by country of origin, destination, and trade agreements.
- Always verify with your local customs authority or use official tools for final clearance.
- </p>
  </div>
- </div>
-
  <script>
  const commonHS = [
- { code: "6109.10", desc: "T-shirts (cotton)", duty: 12 },
- { code: "0901.11", desc: "Coffee (unroasted)", duty: 0 },
- { code: "8471.30", desc: "Laptops & tablets", duty: 0 },
- { code: "6403.99", desc: "Leather shoes", duty: 8 },
- { code: "8703.22", desc: "Passenger cars (under 1500cc)", duty: 25 },
- { code: "1006.30", desc: "Rice (semi-milled)", duty: 5 },
- { code: "8517.12", desc: "Smartphones", duty: 0 },
- { code: "6204.62", desc: "Women's trousers (cotton)", duty: 14 }
+ { code: "6109.10", desc: "T-shirts (cotton)", duty: 12 }, { code: "0901.11", desc: "Coffee (unroasted)", duty: 0 }, { code: "8471.30", desc: "Laptops & tablets", duty: 0 }, { code: "6403.99", desc: "Leather shoes", duty: 8 }, { code: "8703.22", desc: "Passenger cars (under 1500cc)", duty: 25 }, { code: "1006.30", desc: "Rice (semi-milled)", duty: 5 }, { code: "8517.12", desc: "Smartphones", duty: 0 }, { code: "6204.62", desc: "Women's trousers (cotton)", duty: 14 }
  ];
-
- function renderCommonList() {
- const container = document.getElementById('commonList');
- container.innerHTML = commonHS.map((item, i) => `
- <div onclick="selectCommon(${i})"
- class="bg-gray-50 hover:bg-emerald-50 p-4 rounded-2xl cursor-pointer transition-all border border-transparent hover:border-emerald-200">
- <div class="font-mono text-emerald-700 text-lg">${item.code}</div>
- <div class="font-medium">${item.desc}</div>
- <div class="text-xs text-gray-500">${item.duty}% estimated duty</div>
- </div>
- `).join('');
- }
-
- function selectCommon(index) {
- const item = commonHS[index];
- document.getElementById('searchInput').value = `${item.code} - ${item.desc}`;
- calculateDuty(item.duty);
- }
-
- function calculateDuty(preSelectedDuty = null) {
- const goodsValue = parseFloat(document.getElementById('goodsValue').value) || 0;
- let dutyRate = preSelectedDuty;
-
- if (dutyRate === null) {
- const search = (document.getElementById('searchInput').value || '').toLowerCase();
- dutyRate = 8; // default
- if (search.includes('coffee') || search.includes('rice')) dutyRate = 0;
- else if (search.includes('shirt') || search.includes('t-shirt')) dutyRate = 12;
- else if (search.includes('laptop') || search.includes('tablet') || search.includes('phone') || search.includes('smartphone')) dutyRate = 0;
- else if (search.includes('car') || search.includes('vehicle')) dutyRate = 25;
- else if (search.includes('shoe') || search.includes('leather')) dutyRate = 8;
- else if (search.includes('trouser') || search.includes('pant') || search.includes('jean')) dutyRate = 14;
- }
-
- const dutyCost = goodsValue * (dutyRate / 100);
- const estimatedVat = goodsValue * 0.18;
-
- const totalExtra = dutyCost + estimatedVat;
- const landed = goodsValue + totalExtra;
-
- const resultHTML = `
- <div class="bg-emerald-50 rounded-2xl p-6 text-center">
- <p class="text-sm text-emerald-700 font-medium">ESTIMATED DUTY RATE</p>
- <p class="text-6xl font-bold text-emerald-600">${dutyRate}%</p>
- </div>
-
- <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8">
- <div class="space-y-4">
- <div class="flex justify-between"><span class="text-gray-600">Goods Value</span><span class="font-medium">$${goodsValue.toFixed(0)}</span></div>
- <div class="flex justify-between"><span class="text-gray-600">Duty</span><span class="font-medium text-amber-600">+$${dutyCost.toFixed(0)}</span></div>
- <div class="flex justify-between"><span class="text-gray-600">VAT / Tax (example)</span><span class="font-medium text-amber-600">+$${estimatedVat.toFixed(0)}</span></div>
- <div class="pt-4 border-t flex justify-between text-lg font-semibold">
- <span>Total Extra Cost</span>
- <span class="text-amber-600">+$${totalExtra.toFixed(0)}</span>
- </div>
- <div class="flex justify-between text-xl font-bold text-emerald-600">
- <span>Estimated Landed Cost</span>
- <span>$${landed.toFixed(0)}</span>
- </div>
- </div>
- </div>
-
- <div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5">
- <strong>Pro Tip:</strong> Use this as a planning tool only. Actual duty depends on country of origin, trade agreements (e.g., GSP, FTA), and exact HS classification. Always consult your customs broker.
- </div>
- `;
-
- document.getElementById('resultContent').innerHTML = resultHTML;
- document.getElementById('results').classList.remove('hidden');
-
- document.getElementById('mobileResults').innerHTML = `
- <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- ${resultHTML}
- </div>
- `;
- }
-
- window.onload = () => {
- renderCommonList();
- document.getElementById('goodsValue').addEventListener('input', () => calculateDuty());
- document.getElementById('searchInput').addEventListener('input', () => calculateDuty());
- };
+ function renderCommonList(){const c=document.getElementById('commonList');c.innerHTML=commonHS.map((item,i)=>`<div onclick="selectCommon(${i})" class="bg-gray-50 hover:bg-emerald-50 p-4 rounded-2xl cursor-pointer transition-all border border-transparent hover:border-emerald-200"><div class="font-mono text-emerald-700 text-lg">${item.code}</div><div class="font-medium">${item.desc}</div><div class="text-xs text-gray-500">${item.duty}% sample duty</div></div>`).join('')}
+ function selectCommon(index){const item=commonHS[index];document.getElementById('searchInput').value=`${item.code} - ${item.desc}`;calculateDuty(item.duty)}
+ function calculateDuty(preSelectedDuty=null){const goodsValue=Math.max(0,parseFloat(document.getElementById('goodsValue').value)||0);let dutyRate=preSelectedDuty;if(dutyRate===null){const search=(document.getElementById('searchInput').value||'').toLowerCase();dutyRate=8;if(search.includes('coffee'))dutyRate=0;else if(search.includes('shirt')||search.includes('t-shirt'))dutyRate=12;else if(search.includes('laptop')||search.includes('tablet')||search.includes('phone')||search.includes('smartphone'))dutyRate=0;else if(search.includes('car')||search.includes('vehicle'))dutyRate=25;else if(search.includes('rice'))dutyRate=5;else if(search.includes('shoe')||search.includes('leather'))dutyRate=8;else if(search.includes('trouser')||search.includes('pant')||search.includes('jean'))dutyRate=14}const dutyCost=goodsValue*(dutyRate/100);const exampleTax=goodsValue*0.18;const totalExtra=dutyCost+exampleTax;const landed=goodsValue+totalExtra;const resultHTML=`<div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-900"><strong>Not a customs ruling.</strong> This is a rough estimate for planning. Confirm the exact HS code, duty, tax, and trade treatment before quoting or shipping.</div><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">SAMPLE DUTY RATE</p><p class="text-6xl font-bold text-emerald-600">${dutyRate}%</p></div><div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8"><div class="space-y-4"><div class="flex justify-between"><span class="text-gray-600">Goods Value</span><span class="font-medium">$${goodsValue.toFixed(0)}</span></div><div class="flex justify-between"><span class="text-gray-600">Sample Duty</span><span class="font-medium text-amber-600">+$${dutyCost.toFixed(0)}</span></div><div class="flex justify-between"><span class="text-gray-600">Example VAT / Tax</span><span class="font-medium text-amber-600">+$${exampleTax.toFixed(0)}</span></div><div class="pt-4 border-t flex justify-between text-lg font-semibold"><span>Rough Extra Cost</span><span class="text-amber-600">+$${totalExtra.toFixed(0)}</span></div><div class="flex justify-between text-xl font-bold text-emerald-600"><span>Rough Landed Cost</span><span>$${landed.toFixed(0)}</span></div></div></div>`;document.getElementById('resultContent').innerHTML=resultHTML;document.getElementById('results').classList.remove('hidden');document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${resultHTML}</div>`}
+ window.onload=()=>{renderCommonList();document.getElementById('goodsValue').addEventListener('input',()=>calculateDuty());document.getElementById('searchInput').addEventListener('input',()=>calculateDuty())};
  </script>
 </body>
 </html>
