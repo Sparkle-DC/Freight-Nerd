@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="description" content="Free Landed Cost Estimator 2026 - Calculate total cost of imported goods including shipping, duties, taxes, insurance & fees. Essential for importers & exporters.">
+ <title>Landed Cost Estimator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+ body { font-family: 'Inter', system-ui, sans-serif; }
+ .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
+ </style>
+</head>
+<body class="bg-gray-50">
+
+ <div class="max-w-6xl mx-auto px-4 py-8">
+ <!-- Header -->
+ <div class="flex items-center justify-between mb-8">
+ <div class="flex items-center gap-3">
+ <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
+ </div>
+ <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
+ <i class="fas fa-th-large"></i> All Tools
+ </a>
+ </div>
+
+ <div class="grid lg:grid-cols-2 gap-8">
+ <!-- Calculator -->
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <div class="flex items-center gap-3 mb-6">
+ <i class="fas fa-globe text-4xl text-emerald-600"></i>
+ <div>
+ <h1 class="text-3xl font-semibold text-gray-900">Landed Cost Estimator</h1>
+ <p class="text-gray-600">Total Cost to Land • Import/Export • 2026</p>
+ </div>
+ </div>
+
+ <div class="space-y-8">
+ <!-- Goods Value -->
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Value of Goods (USD)</label>
+ <input id="goodsValue" type="number" value="8500" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+
+ <!-- Shipping Cost -->
+ <div class="grid grid-cols-2 gap-6">
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Shipping Cost (USD)</label>
+ <input id="shippingCost" type="number" value="1200" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Insurance (% of goods)</label>
+ <input id="insurancePercent" type="number" value="0.5" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ </div>
+
+ <!-- Duties & Taxes -->
+ <div class="grid grid-cols-2 gap-6">
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Duty Rate (%)</label>
+ <input id="dutyRate" type="number" value="5" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">VAT / Sales Tax (%)</label>
+ <input id="vatRate" type="number" value="18" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ </div>
+
+ <!-- Other Fees -->
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Other Fees (Customs, Handling, etc.)</label>
+ <input id="otherFees" type="number" value="350" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+
+ <button onclick="calculateLandedCost()"
+ class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
+ <i class="fas fa-calculator"></i>
+ Calculate Landed Cost
+ </button>
+ </div>
+ </div>
+
+ <!-- Results -->
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <h2 class="text-2xl font-semibold mb-6">Landed Cost Breakdown</h2>
+ <div id="resultContent" class="space-y-6"></div>
+ </div>
+ </div>
+
+ <!-- Mobile Results -->
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+
+ <!-- Quick Explanation -->
+ <div class="mt-16 max-w-3xl mx-auto text-center">
+ <h2 class="text-2xl font-semibold mb-4">Why Landed Cost Matters</h2>
+ <p class="text-gray-600 leading-relaxed">
+ The real cost of your shipment is much higher than just the invoice price. This tool shows your true cost per unit so you can price profitably and avoid nasty surprises at customs.
+ </p>
+ </div>
+ </div>
+
+ <script>
+ function calculateLandedCost() {
+ const goodsValue = parseFloat(document.getElementById('goodsValue').value) || 0;
+ const shippingCost = parseFloat(document.getElementById('shippingCost').value) || 0;
+ const insurancePercent = parseFloat(document.getElementById('insurancePercent').value) || 0;
+ const dutyRate = parseFloat(document.getElementById('dutyRate').value) || 0;
+ const vatRate = parseFloat(document.getElementById('vatRate').value) || 0;
+ const otherFees = parseFloat(document.getElementById('otherFees').value) || 0;
+
+ const insuranceCost = goodsValue * (insurancePercent / 100);
+ const dutyCost = (goodsValue + shippingCost) * (dutyRate / 100);
+ const vatCost = (goodsValue + shippingCost + dutyCost) * (vatRate / 100);
+
+ const totalLandedCost = goodsValue + shippingCost + insuranceCost + dutyCost + vatCost + otherFees;
+ const totalExtra = totalLandedCost - goodsValue;
+
+ const resultHTML = `
+ <div class="grid grid-cols-2 gap-4">
+ <div class="bg-emerald-50 rounded-2xl p-6 text-center">
+ <p class="text-sm text-emerald-700 font-medium">GOODS VALUE</p>
+ <p class="text-5xl font-semibold text-emerald-600">$${goodsValue.toFixed(0)}</p>
+ </div>
+ <div class="bg-amber-50 rounded-2xl p-6 text-center">
+ <p class="text-sm text-amber-700 font-medium">TOTAL LANDED COST</p>
+ <p class="text-5xl font-semibold text-amber-600">$${totalLandedCost.toFixed(0)}</p>
+ </div>
+ </div>
+
+ <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8">
+ <div class="space-y-4 text-sm">
+ <div class="flex justify-between"><span class="text-gray-600">Shipping</span><span class="font-medium">$${shippingCost.toFixed(0)}</span></div>
+ <div class="flex justify-between"><span class="text-gray-600">Insurance</span><span class="font-medium">$${insuranceCost.toFixed(0)}</span></div>
+ <div class="flex justify-between"><span class="text-gray-600">Duty</span><span class="font-medium">$${dutyCost.toFixed(0)}</span></div>
+ <div class="flex justify-between"><span class="text-gray-600">VAT / Tax</span><span class="font-medium">$${vatCost.toFixed(0)}</span></div>
+ <div class="flex justify-between"><span class="text-gray-600">Other Fees</span><span class="font-medium">$${otherFees.toFixed(0)}</span></div>
+ <div class="pt-4 border-t flex justify-between font-semibold text-lg">
+ <span>Total Extra Cost</span>
+ <span class="text-amber-600">$${totalExtra.toFixed(0)}</span>
+ </div>
+ </div>
+ </div>
+
+ <div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5">
+ <strong>Pro Tip:</strong> Your landed cost is <strong>$${totalLandedCost.toFixed(0)}</strong>.
+ This is the number you should use when calculating your selling price or profit margin.
+ </div>
+ `;
+
+ document.getElementById('resultContent').innerHTML = resultHTML;
+ document.getElementById('results').classList.remove('hidden');
+
+ document.getElementById('mobileResults').innerHTML = `
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ ${resultHTML}
+ </div>
+ `;
+ }
+
+ document.querySelectorAll('input').forEach(el => {
+ el.addEventListener('input', calculateLandedCost);
+ });
+
+ window.onload = calculateLandedCost;
+ </script>
+</body>
+</html>

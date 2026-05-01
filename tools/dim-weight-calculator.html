@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="description" content="Free DIM Weight Calculator 2026 - Calculate dimensional weight for air, LCL, and parcel shipping. Instantly see billable weight vs actual weight.">
+ <title>DIM Weight Calculator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+ body { font-family: 'Inter', system-ui, sans-serif; }
+ .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
+ </style>
+</head>
+<body class="bg-gray-50">
+
+ <div class="max-w-6xl mx-auto px-4 py-8">
+ <!-- Header -->
+ <div class="flex items-center justify-between mb-8">
+ <div class="flex items-center gap-3">
+ <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
+ </div>
+ <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
+ <i class="fas fa-th-large"></i> All Tools
+ </a>
+ </div>
+
+ <div class="grid lg:grid-cols-2 gap-8">
+ <!-- Calculator -->
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <div class="flex items-center gap-3 mb-6">
+ <i class="fas fa-cube text-4xl text-emerald-600"></i>
+ <div>
+ <h1 class="text-3xl font-semibold text-gray-900">DIM Weight Calculator</h1>
+ <p class="text-gray-600">Dimensional Weight • Air • LCL • Parcel • 2026</p>
+ </div>
+ </div>
+
+ <div class="space-y-8">
+ <!-- Dimensions -->
+ <div>
+ <h3 class="font-medium text-gray-700 mb-4 flex items-center gap-2">
+ <i class="fas fa-ruler-combined"></i> Package Dimensions
+ </h3>
+ <div class="grid grid-cols-3 gap-4">
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Length</label>
+ <input id="length" type="number" value="24" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Width</label>
+ <input id="width" type="number" value="18" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Height</label>
+ <input id="height" type="number" value="12" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ </div>
+ </div>
+
+ <!-- Units & Weight -->
+ <div class="grid grid-cols-2 gap-6">
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Unit</label>
+ <div class="flex bg-gray-100 rounded-2xl p-1">
+ <button onclick="setUnit('inches')" id="btn-inches" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all bg-white shadow-sm">Inches</button>
+ <button onclick="setUnit('cm')" id="btn-cm" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all">Centimeters</button>
+ </div>
+ </div>
+
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Actual Weight</label>
+ <div class="flex gap-3">
+ <input id="actualWeight" type="number" value="15" class="flex-1 px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ <select id="weightUnit" class="px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ <option value="lbs">lbs</option>
+ <option value="kg">kg</option>
+ </select>
+ </div>
+ </div>
+ </div>
+
+ <!-- DIM Factor -->
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">DIM Factor (Common Carriers)</label>
+ <select id="dimFactor" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ <option value="166">166 (Domestic US - most common)</option>
+ <option value="139">139 (International / FedEx Express)</option>
+ <option value="194">194 (Some UPS &amp; DHL)</option>
+ <option value="200">200 (Custom / Heavy)</option>
+ </select>
+ </div>
+
+ <button onclick="calculateDIM()"
+ class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
+ <i class="fas fa-calculator"></i>
+ Calculate DIM Weight
+ </button>
+ </div>
+ </div>
+
+ <!-- Results -->
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <h2 class="text-2xl font-semibold mb-6">Your Results</h2>
+ <div id="resultContent" class="space-y-6"></div>
+
+ <div class="mt-8 pt-8 border-t text-xs text-gray-500 flex items-center justify-between">
+ <div>Accurate for 2026 carrier rules</div>
+ <button onclick="copyResults()" class="flex items-center gap-1 text-emerald-600 hover:text-emerald-700">
+ <i class="fas fa-copy"></i> Copy
+ </button>
+ </div>
+ </div>
+ </div>
+
+ <!-- Mobile Results -->
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+
+ <!-- Quick Tip -->
+ <div class="mt-16 max-w-3xl mx-auto text-center">
+ <h2 class="text-2xl font-semibold mb-4">Why DIM Weight Matters</h2>
+ <p class="text-gray-600 leading-relaxed">
+ Carriers charge based on the higher of actual weight or dimensional weight.
+ A large but light package can cost you significantly more than you expect.
+ </p>
+ </div>
+ </div>
+
+ <script>
+ let currentUnit = 'inches';
+
+ function setUnit(unit) {
+ currentUnit = unit;
+ document.getElementById('btn-inches').classList.toggle('bg-white', unit === 'inches');
+ document.getElementById('btn-inches').classList.toggle('shadow-sm', unit === 'inches');
+ document.getElementById('btn-cm').classList.toggle('bg-white', unit === 'cm');
+ document.getElementById('btn-cm').classList.toggle('shadow-sm', unit === 'cm');
+ }
+
+ function calculateDIM() {
+ const length = parseFloat(document.getElementById('length').value) || 0;
+ const width = parseFloat(document.getElementById('width').value) || 0;
+ const height = parseFloat(document.getElementById('height').value) || 0;
+ let actualWeight = parseFloat(document.getElementById('actualWeight').value) || 0;
+ const weightUnit = document.getElementById('weightUnit').value;
+ const dimFactor = parseFloat(document.getElementById('dimFactor').value);
+
+ let lengthIn = currentUnit === 'cm' ? length / 2.54 : length;
+ let widthIn = currentUnit === 'cm' ? width / 2.54 : width;
+ let heightIn = currentUnit === 'cm' ? height / 2.54 : height;
+
+ if (weightUnit === 'kg') actualWeight = actualWeight * 2.20462;
+
+ const volumeCuIn = lengthIn * widthIn * heightIn;
+ const volumeCuFt = volumeCuIn / 1728;
+ const dimWeight = Math.ceil(volumeCuIn / dimFactor);
+
+ const billableWeight = Math.max(actualWeight, dimWeight);
+
+ const resultHTML = `
+ <div class="grid grid-cols-2 gap-4">
+ <div class="bg-emerald-50 rounded-2xl p-6 text-center">
+ <p class="text-sm text-emerald-700 font-medium">VOLUME</p>
+ <p class="text-5xl font-semibold text-emerald-600">${volumeCuFt.toFixed(2)}</p>
+ <p class="text-sm text-gray-600">cubic feet</p>
+ </div>
+ <div class="bg-amber-50 rounded-2xl p-6 text-center">
+ <p class="text-sm text-amber-700 font-medium">DIM WEIGHT</p>
+ <p class="text-5xl font-semibold text-amber-600">${dimWeight}</p>
+ <p class="text-sm text-gray-600">lbs</p>
+ </div>
+ </div>
+
+ <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8 text-center">
+ <div class="flex justify-between items-baseline">
+ <div>
+ <p class="text-sm text-gray-500">Actual Weight</p>
+ <p class="text-4xl font-semibold">${actualWeight.toFixed(1)} lbs</p>
+ </div>
+ <div class="text-3xl text-gray-300">→</div>
+ <div>
+ <p class="text-sm text-gray-500">Billable Weight</p>
+ <p class="text-4xl font-bold text-emerald-600">${billableWeight.toFixed(1)} lbs</p>
+ </div>
+ </div>
+ <p class="mt-4 text-sm ${billableWeight > actualWeight ? 'text-amber-600' : 'text-emerald-600'} font-medium">
+ ${billableWeight > actualWeight ? '⚠️ DIM weight applies – you are being charged for volume' : '✅ Actual weight applies'}
+ </p>
+ </div>
+
+ <div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5">
+ <strong>Pro Tip:</strong> If DIM weight is higher, consider consolidating packages or using smaller boxes to save money.
+ </div>
+ `;
+
+ document.getElementById('resultContent').innerHTML = resultHTML;
+ document.getElementById('results').classList.remove('hidden');
+
+ document.getElementById('mobileResults').innerHTML = `
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ ${resultHTML}
+ </div>
+ `;
+ }
+
+ function copyResults() {
+ const text = document.getElementById('resultContent').innerText;
+ navigator.clipboard.writeText(text).then(() => {
+ alert("✅ Results copied to clipboard!");
+ });
+ }
+
+ document.querySelectorAll('input, select').forEach(el => {
+ el.addEventListener('input', calculateDIM);
+ });
+
+ window.onload = calculateDIM;
+ </script>
+</body>
+</html>

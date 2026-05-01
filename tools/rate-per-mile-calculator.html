@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="description" content="Free Rate Per Mile + Break-Even Calculator 2026 - Calculate your true cost per mile, minimum break-even rate, and profit for trucking & freight. Perfect for owner-operators and brokers.">
+ <title>Rate Per Mile + Break-Even Calculator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+ body { font-family: 'Inter', system-ui, sans-serif; }
+ .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
+ </style>
+</head>
+<body class="bg-gray-50">
+
+ <div class="max-w-6xl mx-auto px-4 py-8">
+ <!-- Header -->
+ <div class="flex items-center justify-between mb-8">
+ <div class="flex items-center gap-3">
+ <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
+ </div>
+ <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
+ <i class="fas fa-th-large"></i> All Tools
+ </a>
+ </div>
+
+ <div class="grid lg:grid-cols-2 gap-8">
+ <!-- Calculator -->
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <div class="flex items-center gap-3 mb-6">
+ <i class="fas fa-truck-fast text-4xl text-emerald-600"></i>
+ <div>
+ <h1 class="text-3xl font-semibold text-gray-900">Rate Per Mile + Break-Even</h1>
+ <p class="text-gray-600">Trucking • Broker • Owner-Operator • 2026</p>
+ </div>
+ </div>
+
+ <div class="space-y-8">
+ <!-- Distance -->
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Trip Distance (miles)</label>
+ <input id="distance" type="number" value="1200" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+
+ <!-- Fuel -->
+ <div class="grid grid-cols-2 gap-6">
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Fuel Price ($/gallon)</label>
+ <input id="fuelPrice" type="number" value="3.85" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Fuel Efficiency (MPG)</label>
+ <input id="mpg" type="number" value="6.5" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ </div>
+
+ <!-- Other costs -->
+ <div class="grid grid-cols-2 gap-6">
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Variable Costs per Mile ($)</label>
+ <input id="variableCost" type="number" value="0.45" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ <p class="text-xs text-gray-500 mt-1">Maintenance, tolls, etc.</p>
+ </div>
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Fixed Costs per Trip ($)</label>
+ <input id="fixedCost" type="number" value="450" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ <p class="text-xs text-gray-500 mt-1">Driver pay, insurance, etc.</p>
+ </div>
+ </div>
+
+ <!-- Revenue -->
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Revenue Rate per Mile ($)</label>
+ <input id="revenuePerMile" type="number" value="2.25" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+
+ <button onclick="calculateRPM()"
+ class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
+ <i class="fas fa-calculator"></i>
+ Calculate Profit &amp; Break-Even
+ </button>
+ </div>
+ </div>
+
+ <!-- Results -->
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <h2 class="text-2xl font-semibold mb-6">Your Results</h2>
+ <div id="resultContent" class="space-y-6"></div>
+ </div>
+ </div>
+
+ <!-- Mobile Results -->
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+
+ <!-- Quick Tip -->
+ <div class="mt-16 max-w-3xl mx-auto text-center">
+ <h2 class="text-2xl font-semibold mb-4">Why This Matters</h2>
+ <p class="text-gray-600 leading-relaxed">
+ Knowing your true cost per mile helps you quote profitably, avoid losing loads, and stay ahead of rising fuel &amp; maintenance costs in 2026.
+ </p>
+ </div>
+ </div>
+
+ <script>
+ function calculateRPM() {
+ const distance = parseFloat(document.getElementById('distance').value) || 0;
+ const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
+ const mpg = parseFloat(document.getElementById('mpg').value) || 0;
+ const variableCost = parseFloat(document.getElementById('variableCost').value) || 0;
+ const fixedCost = parseFloat(document.getElementById('fixedCost').value) || 0;
+ const revenuePerMile = parseFloat(document.getElementById('revenuePerMile').value) || 0;
+
+ const fuelPerMile = mpg > 0 ? fuelPrice / mpg : 0;
+ const totalVariablePerMile = fuelPerMile + variableCost;
+ const fixedPerMile = distance > 0 ? fixedCost / distance : 0;
+ const totalCostPerMile = totalVariablePerMile + fixedPerMile;
+
+ const breakEvenRate = totalCostPerMile;
+ const profitPerMile = revenuePerMile - totalCostPerMile;
+ const totalProfit = profitPerMile * distance;
+ const totalRevenue = revenuePerMile * distance;
+ const totalCost = totalCostPerMile * distance;
+
+ const resultHTML = `
+ <div class="grid grid-cols-2 gap-4">
+ <div class="bg-emerald-50 rounded-2xl p-6 text-center">
+ <p class="text-sm text-emerald-700 font-medium">COST PER MILE</p>
+ <p class="text-5xl font-semibold text-emerald-600">$${totalCostPerMile.toFixed(2)}</p>
+ </div>
+ <div class="bg-amber-50 rounded-2xl p-6 text-center">
+ <p class="text-sm text-amber-700 font-medium">BREAK-EVEN RATE</p>
+ <p class="text-5xl font-semibold text-amber-600">$${breakEvenRate.toFixed(2)}</p>
+ </div>
+ </div>
+
+ <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8">
+ <div class="flex justify-between items-center">
+ <div class="text-center">
+ <p class="text-sm text-gray-500">Total Revenue</p>
+ <p class="text-4xl font-semibold">$${totalRevenue.toFixed(0)}</p>
+ </div>
+ <div class="text-center">
+ <p class="text-sm text-gray-500">Total Cost</p>
+ <p class="text-4xl font-semibold">$${totalCost.toFixed(0)}</p>
+ </div>
+ <div class="text-center">
+ <p class="text-sm text-emerald-600 font-medium">Profit</p>
+ <p class="text-4xl font-bold ${profitPerMile >= 0 ? 'text-emerald-600' : 'text-red-500'}">$${totalProfit.toFixed(0)}</p>
+ </div>
+ </div>
+ <p class="mt-6 text-center text-sm font-medium ${profitPerMile >= 0 ? 'text-emerald-600' : 'text-red-500'}">
+ ${profitPerMile >= 0 ? '✅ Profitable trip' : '⚠️ You are losing money on this load'}
+ </p>
+ </div>
+
+ <div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5">
+ <strong>Pro Tip:</strong> Your break-even rate is <strong>$${breakEvenRate.toFixed(2)}/mile</strong>.
+ Quote anything above this to make profit. Update fuel price regularly as it changes fast in 2026.
+ </div>
+ `;
+
+ document.getElementById('resultContent').innerHTML = resultHTML;
+ document.getElementById('results').classList.remove('hidden');
+
+ document.getElementById('mobileResults').innerHTML = `
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ ${resultHTML}
+ </div>
+ `;
+ }
+
+ document.querySelectorAll('input').forEach(el => {
+ el.addEventListener('input', calculateRPM);
+ });
+
+ window.onload = calculateRPM;
+ </script>
+</body>
+</html>

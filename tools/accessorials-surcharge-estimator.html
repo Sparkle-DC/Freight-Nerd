@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="description" content="Free Accessorials & Surcharge Estimator 2026 - Add liftgate, residential delivery, detention, storage and more to your freight quote. Perfect companion to Fuel Surcharge Calculator.">
+ <title>Accessorials & Surcharge Estimator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+ body { font-family: 'Inter', system-ui, sans-serif; }
+ .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
+ </style>
+</head>
+<body class="bg-gray-50">
+
+ <div class="max-w-6xl mx-auto px-4 py-8">
+ <!-- Header -->
+ <div class="flex items-center justify-between mb-8">
+ <div class="flex items-center gap-3">
+ <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
+ </div>
+ <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
+ <i class="fas fa-th-large"></i> All Tools
+ </a>
+ </div>
+
+ <div class="grid lg:grid-cols-2 gap-8">
+ <!-- Calculator -->
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <div class="flex items-center gap-3 mb-6">
+ <i class="fas fa-tags text-4xl text-emerald-600"></i>
+ <div>
+ <h1 class="text-3xl font-semibold text-gray-900">Accessorials & Surcharge Estimator</h1>
+ <p class="text-gray-600">Extra Fees • 2026 Carrier Rates</p>
+ </div>
+ </div>
+
+ <div class="space-y-8">
+ <!-- Base Cost -->
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Base Freight Cost (USD)</label>
+ <input id="baseCost" type="number" value="1250" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+
+ <!-- Weight (optional) -->
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Shipment Weight (lbs) — optional for some fees</label>
+ <input id="weight" type="number" value="2200" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+
+ <!-- Common Accessorials -->
+ <div>
+ <h3 class="font-medium text-gray-700 mb-4">Select Accessorials</h3>
+ <div class="grid grid-cols-2 gap-3 text-sm" id="accessorialList">
+ <!-- Populated by JS -->
+ </div>
+ </div>
+
+ <button onclick="calculateAccessorials()"
+ class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
+ <i class="fas fa-calculator"></i>
+ Calculate Total Cost
+ </button>
+ </div>
+ </div>
+
+ <!-- Results -->
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <h2 class="text-2xl font-semibold mb-6">Cost Breakdown</h2>
+ <div id="resultContent" class="space-y-6"></div>
+ </div>
+ </div>
+
+ <!-- Mobile Results -->
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+
+ <!-- Quick Explanation -->
+ <div class="mt-16 max-w-3xl mx-auto text-center">
+ <h2 class="text-2xl font-semibold mb-4">Common Accessorial Fees in 2026</h2>
+ <p class="text-gray-600 leading-relaxed">
+ These "extra" charges can easily add 20–50% to your freight bill. Use this tool to quote accurately and avoid surprises.
+ </p>
+ </div>
+ </div>
+
+ <script>
+ const accessorials = [
+ { name: "Fuel Surcharge", rate: 18, type: "percent", default: true },
+ { name: "Liftgate", rate: 125, type: "flat", default: false },
+ { name: "Residential Delivery", rate: 85, type: "flat", default: false },
+ { name: "Inside Delivery", rate: 95, type: "flat", default: false },
+ { name: "Detention (per hour)", rate: 150, type: "flat", default: false, hours: 2 },
+ { name: "Storage (per day)", rate: 85, type: "flat", default: false, days: 1 },
+ { name: "Limited Access", rate: 110, type: "flat", default: false },
+ { name: "Hazmat Fee", rate: 95, type: "flat", default: false }
+ ];
+
+ function renderAccessorials() {
+ const container = document.getElementById('accessorialList');
+ container.innerHTML = accessorials.map((item, index) => `
+ <div class="flex items-center gap-3 bg-gray-50 hover:bg-gray-100 p-3 rounded-2xl transition-all">
+ <input type="checkbox" id="acc-${index}" ${item.default ? 'checked' : ''} class="w-5 h-5 text-emerald-600 accent-emerald-600">
+ <div class="flex-1">
+ <label for="acc-${index}" class="font-medium cursor-pointer">${item.name}</label>
+ ${item.type === 'percent' ? `<span class="text-xs text-gray-500">(${item.rate}%)</span>` : `<span class="text-xs text-gray-500">($${item.rate})</span>`}
+ </div>
+ ${item.hours ? `<input type="number" id="acc-hours-${index}" value="${item.hours}" class="w-16 px-2 py-1 text-xs border rounded-xl"> hrs` : ''}
+ ${item.days ? `<input type="number" id="acc-days-${index}" value="${item.days}" class="w-16 px-2 py-1 text-xs border rounded-xl"> days` : ''}
+ </div>
+ `).join('');
+ }
+
+ function calculateAccessorials() {
+ const baseCost = parseFloat(document.getElementById('baseCost').value) || 0;
+ const weight = parseFloat(document.getElementById('weight').value) || 0;
+
+ let totalAccessorial = 0;
+ let breakdownHTML = '';
+
+ accessorials.forEach((item, index) => {
+ const checkbox = document.getElementById(`acc-${index}`);
+ if (!checkbox || !checkbox.checked) return;
+
+ let fee = 0;
+ if (item.type === 'percent') {
+ fee = baseCost * (item.rate / 100);
+ } else {
+ fee = item.rate;
+ if (item.hours) {
+ const hours = parseFloat(document.getElementById(`acc-hours-${index}`).value) || 0;
+ fee *= hours;
+ }
+ if (item.days) {
+ const days = parseFloat(document.getElementById(`acc-days-${index}`).value) || 0;
+ fee *= days;
+ }
+ }
+ totalAccessorial += fee;
+
+ breakdownHTML += `
+ <div class="flex justify-between text-sm py-2 border-b last:border-0">
+ <span>${item.name}</span>
+ <span class="font-medium">+$${fee.toFixed(0)}</span>
+ </div>`;
+ });
+
+ const grandTotal = baseCost + totalAccessorial;
+
+ const resultHTML = `
+ <div class="bg-emerald-50 rounded-2xl p-6 text-center mb-6">
+ <p class="text-sm text-emerald-700 font-medium">BASE FREIGHT</p>
+ <p class="text-5xl font-semibold text-emerald-600">$${baseCost.toFixed(0)}</p>
+ </div>
+
+ <div class="bg-white border border-gray-200 rounded-3xl p-6">
+ <h3 class="font-medium mb-4">Accessorials Added</h3>
+ ${breakdownHTML || '<p class="text-gray-400 italic">No accessorials selected</p>'}
+ </div>
+
+ <div class="mt-8 text-center bg-emerald-600 text-white rounded-3xl p-8">
+ <p class="text-sm tracking-widest">GRAND TOTAL</p>
+ <p class="text-6xl font-bold">$${grandTotal.toFixed(0)}</p>
+ <p class="text-emerald-200 mt-2">+$${totalAccessorial.toFixed(0)} in accessorials</p>
+ </div>
+
+ <div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5">
+ <strong>Pro Tip:</strong> Accessorials can add 20–50% to your bill. Always confirm exact rates with your carrier — they vary by lane and season.
+ </div>
+ `;
+
+ document.getElementById('resultContent').innerHTML = resultHTML;
+ document.getElementById('results').classList.remove('hidden');
+
+ document.getElementById('mobileResults').innerHTML = `
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ ${resultHTML}
+ </div>
+ `;
+ }
+
+ window.onload = () => {
+ renderAccessorials();
+ setTimeout(calculateAccessorials, 300);
+ document.getElementById('baseCost').addEventListener('input', calculateAccessorials);
+ document.getElementById('weight').addEventListener('input', calculateAccessorials);
+ };
+
+ document.addEventListener('change', (e) => {
+ if (e.target.type === 'checkbox' || e.target.id.startsWith('acc-hours') || e.target.id.startsWith('acc-days')) {
+ calculateAccessorials();
+ }
+ });
+ </script>
+</body>
+</html>

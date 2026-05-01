@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <url><loc>https://freightnerd.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+ <url><loc>https://freightnerd.com/tools/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+ <url><loc>https://freightnerd.com/about.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+ <url><loc>https://freightnerd.com/contact.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+ <url><loc>https://freightnerd.com/tools/cbm-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/pallet-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/packing-list-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/freight-profit-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/freight-class-density-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/dim-weight-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/container-loading-optimizer.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/rate-per-mile-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/landed-cost-estimator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/accessorials-surcharge-estimator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/hs-code-duty-estimator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/transit-time-mode-comparator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+</urlset>

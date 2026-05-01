@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="description" content="Free Transit Time & Mode Comparator 2026 - Compare truck, ocean, air, and rail shipping times and rough costs. Instant decision tool for logistics pros.">
+ <title>Transit Time & Mode Comparator | FreightNerd</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <style>
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+ body { font-family: 'Inter', system-ui, sans-serif; }
+ .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
+ </style>
+</head>
+<body class="bg-gray-50">
+
+ <div class="max-w-6xl mx-auto px-4 py-8">
+ <!-- Header -->
+ <div class="flex items-center justify-between mb-8">
+ <div class="flex items-center gap-3">
+ <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
+ </div>
+ <a href="/tools/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
+ <i class="fas fa-th-large"></i> All Tools
+ </a>
+ </div>
+
+ <div class="grid lg:grid-cols-2 gap-8">
+ <!-- Calculator -->
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <div class="flex items-center gap-3 mb-6">
+ <i class="fas fa-route text-4xl text-emerald-600"></i>
+ <div>
+ <h1 class="text-3xl font-semibold text-gray-900">Transit Time & Mode Comparator</h1>
+ <p class="text-gray-600">Truck • Ocean • Air • Rail • 2026 Estimates</p>
+ </div>
+ </div>
+
+ <div class="space-y-8">
+ <!-- Distance -->
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">Distance (miles)</label>
+ <input id="distance" type="number" value="8500" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+
+ <!-- Origin / Destination (optional, for realism) -->
+ <div class="grid grid-cols-2 gap-6">
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">From (Origin)</label>
+ <input id="origin" type="text" value="Colombo, Sri Lanka" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ <div>
+ <label class="block text-sm font-medium text-gray-600 mb-1">To (Destination)</label>
+ <input id="destination" type="text" value="Los Angeles, USA" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
+ </div>
+ </div>
+
+ <button onclick="calculateTransit()"
+ class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
+ <i class="fas fa-clock"></i>
+ Compare Modes
+ </button>
+ </div>
+ </div>
+
+ <!-- Results -->
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ <h2 class="text-2xl font-semibold mb-6">Mode Comparison</h2>
+ <div id="resultContent" class="space-y-6"></div>
+ </div>
+ </div>
+
+ <!-- Mobile Results -->
+ <div id="mobileResults" class="lg:hidden mt-8"></div>
+
+ <!-- Quick Explanation -->
+ <div class="mt-16 max-w-3xl mx-auto text-center">
+ <h2 class="text-2xl font-semibold mb-4">How to Use This Tool</h2>
+ <p class="text-gray-600 leading-relaxed">
+ Enter the distance (or just a realistic long-haul example) and get instant 2026 estimates for transit time and relative cost.
+ Great for deciding between speed (Air) and cost (Ocean).
+ </p>
+ </div>
+ </div>
+
+ <script>
+ function calculateTransit() {
+ const distanceMiles = parseFloat(document.getElementById('distance').value) || 5000;
+
+ const modes = [
+ {
+ name: "Truck (FTL)",
+ timeDays: Math.round(distanceMiles / 500),
+ costIndex: 1.8,
+ icon: "🚚",
+ color: "emerald"
+ },
+ {
+ name: "Ocean (LCL/FCL)",
+ timeDays: Math.round(distanceMiles / 450) + 18,
+ costIndex: 1.0,
+ icon: "🚢",
+ color: "blue"
+ },
+ {
+ name: "Air Freight",
+ timeDays: Math.round(distanceMiles / 8000) + 2,
+ costIndex: 4.5,
+ icon: "✈️",
+ color: "amber"
+ },
+ {
+ name: "Rail (Intermodal)",
+ timeDays: Math.round(distanceMiles / 600) + 5,
+ costIndex: 1.3,
+ icon: "🚂",
+ color: "slate"
+ }
+ ];
+
+ let rowsHTML = modes.map(mode => `
+ <div class="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-5 rounded-2xl transition-all">
+ <div class="flex items-center gap-4">
+ <span class="text-3xl">${mode.icon}</span>
+ <div>
+ <div class="font-semibold text-lg">${mode.name}</div>
+ <div class="text-sm text-gray-500">${mode.timeDays} days transit</div>
+ </div>
+ </div>
+ <div class="text-right">
+ <div class="text-3xl font-bold text-${mode.color}-600">$${Math.round(distanceMiles * mode.costIndex / 1000)}k</div>
+ <div class="text-xs text-gray-500">approx. cost</div>
+ </div>
+ </div>
+ `).join('');
+
+ const resultHTML = `
+ <div class="space-y-4">
+ ${rowsHTML}
+ </div>
+
+ <div class="mt-8 text-sm bg-gray-50 rounded-2xl p-5">
+ <strong>Pro Tip:</strong> Ocean is usually the cheapest for distances > 3000 miles, but Air can be 4–5x more expensive.
+ Use these estimates for planning only — actual times depend on route, carrier, and season.
+ </div>
+ `;
+
+ document.getElementById('resultContent').innerHTML = resultHTML;
+ document.getElementById('results').classList.remove('hidden');
+
+ document.getElementById('mobileResults').innerHTML = `
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
+ ${resultHTML}
+ </div>
+ `;
+ }
+
+ document.querySelectorAll('input').forEach(el => {
+ el.addEventListener('input', calculateTransit);
+ });
+
+ window.onload = calculateTransit;
+ </script>
+</body>
+</html>
