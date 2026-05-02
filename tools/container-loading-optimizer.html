@@ -3,197 +3,48 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="description" content="Free Container Loading Optimizer 2026 - See exactly how many pallets or boxes fit in 20ft, 40ft & 40ft High Cube containers. Visual utilization + CBM calculator.">
- <title>Container Loading Optimizer | FreightNerd</title>
+ <meta name="description" content="Free container loading calculator for 20ft, 40ft and 40ft high cube containers. Estimate how many boxes or pallets fit, CBM utilization, floor loading and stacking layers.">
+ <title>Container Loading Calculator for 20ft & 40ft Containers | FreightNerd</title>
  <base href="/Freight-Nerd/">
  <script src="https://cdn.tailwindcss.com"></script>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <script type="application/ld+json">
+ {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"How do you calculate how many boxes fit in a container?","acceptedAnswer":{"@type":"Answer","text":"Divide the container internal length, width and height by the item dimensions, then multiply the number that fits lengthwise, widthwise and heightwise. Check rotated orientations because turning the box or pallet can change the result."}},
+  {"@type":"Question","name":"How many CBM fit in a 20ft container?","acceptedAnswer":{"@type":"Answer","text":"A 20ft standard container is commonly estimated around 33 CBM internally, but practical usable space can be lower depending on cargo shape, packing method and weight limits."}},
+  {"@type":"Question","name":"How many CBM fit in a 40ft container?","acceptedAnswer":{"@type":"Answer","text":"A 40ft standard container is commonly estimated around 67 CBM. A 40ft high cube is commonly estimated around 76 CBM."}},
+  {"@type":"Question","name":"Can this calculator replace a professional load plan?","acceptedAnswer":{"@type":"Answer","text":"No. This is a planning calculator for identical boxes or pallets. Real container loading also depends on weight distribution, cargo strength, loading sequence, lashing, dunnage and safety limits."}},
+  {"@type":"Question","name":"Why does rotating cargo matter?","acceptedAnswer":{"@type":"Answer","text":"Rotating cargo can change how many units fit along the container length and width. Some cargo may fit better when length and width are swapped."}}
+ ]}
+ </script>
  <style>
- @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
  body { font-family: 'Inter', system-ui, sans-serif; }
  .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
  .container-visual { border: 3px solid #10b981; background: linear-gradient(90deg, #ecfdf5 0%, #d1fae5 100%); }
  </style>
 </head>
-<body class="bg-gray-50">
-
+<body class="bg-gray-50 text-gray-900">
  <div class="max-w-6xl mx-auto px-4 py-8">
- <!-- Header -->
- <div class="flex items-center justify-between mb-8">
- <div class="flex items-center gap-3">
- <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
- </div>
- <a href="/Freight-Nerd/#tools" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
- <i class="fas fa-th-large"></i> All Tools
- </a>
- </div>
-
+ <div class="flex items-center justify-between mb-8"><a href="/Freight-Nerd/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a><div class="flex gap-4 text-sm font-medium"><a href="/Freight-Nerd/" class="text-gray-500 hover:text-emerald-700">All Tools</a><a href="/Freight-Nerd/tools/cbm-calculator.html" class="text-gray-500 hover:text-emerald-700">CBM</a><a href="/Freight-Nerd/faq.html" class="text-gray-500 hover:text-emerald-700">FAQ</a></div></div>
+ <div class="mb-8 max-w-3xl"><p class="text-sm font-semibold text-emerald-600 mb-2">FREE OCEAN FREIGHT TOOL</p><h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Container Loading Calculator for 20ft & 40ft Containers</h1><p class="text-lg text-gray-600">Estimate how many identical boxes or pallets fit in a 20ft, 40ft or 40ft high cube container, including stacking layers, CBM utilization and best rotated orientation.</p></div>
+ <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-3xl p-5 mb-8 text-sm leading-relaxed"><strong>Planning only:</strong> This calculator estimates geometric fit. Always verify actual cargo weight, load limits, lashing, stacking strength, door opening, forklift access and carrier requirements before loading.</div>
  <div class="grid lg:grid-cols-2 gap-8">
- <!-- Calculator -->
- <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- <div class="flex items-center gap-3 mb-6">
- <i class="fas fa-ship text-4xl text-emerald-600"></i>
- <div>
- <h1 class="text-3xl font-semibold text-gray-900">Container Loading Optimizer</h1>
- <p class="text-gray-600">20ft • 40ft • 40ft High Cube • 2026</p>
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100"><div class="flex items-center gap-3 mb-6"><i class="fas fa-ship text-4xl text-emerald-600"></i><div><h2 class="text-3xl font-semibold text-gray-900">Optimize Container Loading</h2><p class="text-gray-600">20ft • 40ft • 40ft high cube</p></div></div><div class="space-y-8"><div><label class="block text-sm font-medium text-gray-600 mb-1">Container Type</label><select id="containerType" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"><option value="20">20ft Standard — approx. 33 CBM</option><option value="40" selected>40ft Standard — approx. 67 CBM</option><option value="40hc">40ft High Cube — approx. 76 CBM</option></select></div><div><h3 class="font-medium text-gray-700 mb-4 flex items-center gap-2"><i class="fas fa-box"></i> Box / Pallet Dimensions</h3><div class="grid grid-cols-3 gap-4"><div><label class="block text-sm font-medium text-gray-600 mb-1">Length</label><input id="length" type="number" min="0" value="48" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Width</label><input id="width" type="number" min="0" value="40" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Height</label><input id="height" type="number" min="0" value="48" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div></div></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Unit</label><div class="flex bg-gray-100 rounded-2xl p-1"><button onclick="setUnit('inches')" id="btn-inches" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all bg-white shadow-sm">Inches</button><button onclick="setUnit('cm')" id="btn-cm" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all">Centimeters</button></div></div><button onclick="calculateLoading()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3"><i class="fas fa-cubes"></i> Optimize Loading</button></div></div>
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100"><h2 class="text-2xl font-semibold mb-6">Loading Results</h2><div id="resultContent" class="space-y-6"></div></div>
  </div>
- </div>
-
- <div class="space-y-8">
- <!-- Container Type -->
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Container Type</label>
- <select id="containerType" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- <option value="20">20ft Standard (33 CBM)</option>
- <option value="40" selected>40ft Standard (67 CBM)</option>
- <option value="40hc">40ft High Cube (76 CBM)</option>
- </select>
- </div>
-
- <!-- Item Dimensions -->
- <div>
- <h3 class="font-medium text-gray-700 mb-4 flex items-center gap-2">
- <i class="fas fa-box"></i> Item / Pallet Dimensions
- </h3>
- <div class="grid grid-cols-3 gap-4">
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Length</label>
- <input id="length" type="number" value="48" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Width</label>
- <input id="width" type="number" value="40" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Height</label>
- <input id="height" type="number" value="48" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
- </div>
- </div>
-
- <!-- Unit Toggle -->
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Unit</label>
- <div class="flex bg-gray-100 rounded-2xl p-1">
- <button onclick="setUnit('inches')" id="btn-inches" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all bg-white shadow-sm">Inches</button>
- <button onclick="setUnit('cm')" id="btn-cm" class="flex-1 py-3 rounded-[14px] font-medium text-sm transition-all">Centimeters</button>
- </div>
- </div>
-
- <button onclick="calculateLoading()"
- class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
- <i class="fas fa-cubes"></i>
- Optimize Loading
- </button>
- </div>
- </div>
-
- <!-- Results -->
- <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- <h2 class="text-2xl font-semibold mb-6">Loading Results</h2>
- <div id="resultContent" class="space-y-6"></div>
- </div>
- </div>
-
- <!-- Mobile Results -->
  <div id="mobileResults" class="lg:hidden mt-8"></div>
-
- <!-- Quick Explanation -->
- <div class="mt-16 max-w-3xl mx-auto text-center">
- <h2 class="text-2xl font-semibold mb-4">How It Works</h2>
- <p class="text-gray-600 leading-relaxed">
- This optimizer calculates the maximum number of identical items (pallets or boxes) that fit in the selected container, including stacking.
- It also shows volume utilization % so you can maximize space and reduce shipping costs.
- </p>
+ <section class="mt-14 grid lg:grid-cols-3 gap-6"><div class="bg-white rounded-3xl border border-gray-100 p-6 lg:col-span-2"><h2 class="text-2xl font-bold mb-3">How container loading is estimated</h2><p class="text-gray-600 leading-relaxed">This calculator checks how many identical cargo units fit inside a container by dividing internal container dimensions by the cargo dimensions. It tests length-width rotation and shows the best orientation for floor fit and stacking.</p><p class="text-gray-600 leading-relaxed mt-3">For real shipments, volume fit is only one part of planning. Weight limits, axle distribution, stacking strength, cargo damage risk and loading sequence also matter.</p></div><div class="bg-emerald-50 rounded-3xl border border-emerald-100 p-6"><h2 class="text-xl font-bold mb-3">Fit Formula</h2><div class="bg-white rounded-2xl p-4 font-semibold text-emerald-700 text-sm space-y-2"><div>Items = length fit × width fit × height layers</div><div>Utilization = used CBM ÷ container CBM</div></div></div></section>
+ <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-4">Container planning notes</h2><div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-gray-600"><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">20ft container</h3><p>Common planning volume around 33 CBM, but weight often becomes the real limit.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">40ft container</h3><p>Common planning volume around 67 CBM for standard dry containers.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">40ft high cube</h3><p>More height, often around 76 CBM planning volume.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Pallets</h3><p>Floor loading is often more important than pure CBM when pallets cannot be stacked.</p></div></div></section>
+ <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-5">Container Loading FAQ</h2><div class="space-y-5"><div><h3 class="font-semibold text-gray-900">How many pallets fit in a 40ft container?</h3><p class="text-gray-600">It depends on pallet size, container type and whether pallets can be stacked. Standard 48×40 inch pallets usually need a layout check rather than just CBM math.</p></div><div><h3 class="font-semibold text-gray-900">Why is utilization not always 100%?</h3><p class="text-gray-600">Rectangular cargo often leaves unused space because the dimensions do not divide evenly into the container’s internal dimensions.</p></div><div><h3 class="font-semibold text-gray-900">Does this calculator include weight limits?</h3><p class="text-gray-600">No. It estimates geometric fit only. Heavy cargo may hit payload or road weight limits before filling the container volume.</p></div><div><h3 class="font-semibold text-gray-900">Should I use CBM calculator before container loading?</h3><p class="text-gray-600">Yes. CBM helps estimate shipment volume. Container loading checks whether the cargo shape physically fits.</p></div></div></section>
+ <section class="mt-8 flex flex-wrap gap-3"><a href="/Freight-Nerd/tools/cbm-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try CBM Calculator</a><a href="/Freight-Nerd/tools/pallet-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try Pallet Calculator</a><a href="/Freight-Nerd/tools/packing-list-generator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Packing List Generator</a></section>
  </div>
- </div>
-
  <script>
  let currentUnit = 'inches';
-
- function setUnit(unit) {
- currentUnit = unit;
- document.getElementById('btn-inches').classList.toggle('bg-white', unit === 'inches');
- document.getElementById('btn-inches').classList.toggle('shadow-sm', unit === 'inches');
- document.getElementById('btn-cm').classList.toggle('bg-white', unit === 'cm');
- document.getElementById('btn-cm').classList.toggle('shadow-sm', unit === 'cm');
- }
-
- function calculateLoading() {
- const containerType = document.getElementById('containerType').value;
- let length = parseFloat(document.getElementById('length').value) || 0;
- let width = parseFloat(document.getElementById('width').value) || 0;
- let height = parseFloat(document.getElementById('height').value) || 0;
-
- if (currentUnit === 'cm') {
- length /= 2.54; width /= 2.54; height /= 2.54;
- }
-
- let contL, contW, contH, contCBM;
- if (containerType === '20') {
- contL = 232; contW = 92; contH = 94; contCBM = 33;
- } else if (containerType === '40') {
- contL = 473; contW = 92; contH = 94; contCBM = 67;
- } else {
- contL = 473; contW = 92; contH = 106; contCBM = 76;
- }
-
- const fitLength = Math.floor(contL / length);
- const fitWidth = Math.floor(contW / width);
- const fitHeight = Math.floor(contH / height);
-
- const totalItems = fitLength * fitWidth * fitHeight;
- const itemVolumeCuFt = (length * width * height) / 1728;
- const totalVolumeCuFt = totalItems * itemVolumeCuFt;
- const containerCuFt = contCBM * 35.3147;
- const utilization = containerCuFt > 0 ? Math.min(100, (totalVolumeCuFt / containerCuFt) * 100) : 0;
-
- const visualHTML = `
- <div class="container-visual rounded-3xl p-6 text-center">
- <div class="text-sm font-medium text-emerald-700 mb-3">Container Floor View (Top Down)</div>
- <div class="inline-grid gap-1 bg-white p-4 rounded-2xl shadow-inner" style="grid-template-columns: repeat(${Math.min(fitWidth, 8)}, 1fr);">
- ${Array.from({length: Math.min(fitLength * fitWidth, 40)}).map(() => `
- <div class="w-6 h-6 bg-emerald-500 rounded flex items-center justify-center text-[10px] text-white font-bold">✓</div>
- `).join('')}
- </div>
- <p class="text-xs text-gray-500 mt-3">${fitLength} × ${fitWidth} on floor • ${fitHeight} layers high</p>
- </div>
- `;
-
- const resultHTML = `
- ${visualHTML}
- <div class="grid grid-cols-2 gap-4 mt-6">
- <div class="bg-emerald-50 rounded-2xl p-6 text-center">
- <p class="text-sm text-emerald-700 font-medium">MAX ITEMS</p>
- <p class="text-5xl font-semibold text-emerald-600">${totalItems}</p>
- </div>
- <div class="bg-amber-50 rounded-2xl p-6 text-center">
- <p class="text-sm text-amber-700 font-medium">UTILIZATION</p>
- <p class="text-5xl font-semibold text-amber-600">${utilization.toFixed(0)}%</p>
- </div>
- </div>
-
- <div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5">
- <strong>Pro Tip:</strong> You can fit <strong>${totalItems}</strong> items.
- Consider rotating items 90° or using different stacking patterns to improve utilization further.
- </div>
- `;
-
- document.getElementById('resultContent').innerHTML = resultHTML;
- document.getElementById('results').classList.remove('hidden');
-
- document.getElementById('mobileResults').innerHTML = `
- <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- ${resultHTML}
- </div>
- `;
- }
-
- document.querySelectorAll('input, select').forEach(el => {
- el.addEventListener('input', calculateLoading);
- });
-
- window.onload = calculateLoading;
+ function setUnit(unit) {currentUnit = unit;document.getElementById('btn-inches').classList.toggle('bg-white', unit === 'inches');document.getElementById('btn-inches').classList.toggle('shadow-sm', unit === 'inches');document.getElementById('btn-cm').classList.toggle('bg-white', unit === 'cm');document.getElementById('btn-cm').classList.toggle('shadow-sm', unit === 'cm');calculateLoading()}
+ function getContainer(type){if(type==='20')return{l:232,w:92,h:94,cbm:33,name:'20ft Standard'};if(type==='40')return{l:473,w:92,h:94,cbm:67,name:'40ft Standard'};return{l:473,w:92,h:106,cbm:76,name:'40ft High Cube'}}
+ function calculateLoading() {const containerType=document.getElementById('containerType').value;let length=Math.max(0,parseFloat(document.getElementById('length').value)||0),width=Math.max(0,parseFloat(document.getElementById('width').value)||0),height=Math.max(0,parseFloat(document.getElementById('height').value)||0);if(currentUnit==='cm'){length/=2.54;width/=2.54;height/=2.54}const c=getContainer(containerType);const orientations=[{l:length,w:width,label:'Original orientation'},{l:width,w:length,label:'Rotated 90°'}].map(o=>{const fitL=o.l>0?Math.floor(c.l/o.l):0,fitW=o.w>0?Math.floor(c.w/o.w):0,fitH=height>0?Math.floor(c.h/height):0,total=fitL*fitW*fitH;return{...o,fitL,fitW,fitH,total}});const best=orientations.sort((a,b)=>b.total-a.total)[0];const itemVolumeCuFt=(length*width*height)/1728,totalVolumeCuFt=best.total*itemVolumeCuFt,containerCuFt=c.cbm*35.3147,usedCbm=totalVolumeCuFt/35.3147,utilization=containerCuFt>0?Math.min(100,(totalVolumeCuFt/containerCuFt)*100):0;const visualHTML=`<div class="container-visual rounded-3xl p-6 text-center"><div class="text-sm font-medium text-emerald-700 mb-3">Container Floor View — ${best.label}</div><div class="inline-grid gap-1 bg-white p-4 rounded-2xl shadow-inner" style="grid-template-columns: repeat(${Math.max(1,Math.min(best.fitW,8))}, 1fr);">${Array.from({length: Math.min(best.fitL*best.fitW,40)}).map(()=>`<div class="w-6 h-6 bg-emerald-500 rounded flex items-center justify-center text-[10px] text-white font-bold">✓</div>`).join('')}</div><p class="text-xs text-gray-500 mt-3">${best.fitL} × ${best.fitW} on floor • ${best.fitH} layers high</p></div>`;const resultHTML=`${visualHTML}<div class="grid grid-cols-2 gap-4 mt-6"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">MAX ITEMS</p><p class="text-5xl font-semibold text-emerald-600">${best.total}</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">CBM UTILIZATION</p><p class="text-5xl font-semibold text-amber-600">${utilization.toFixed(0)}%</p></div></div><div class="mt-6 bg-gray-50 rounded-2xl p-5 text-sm"><div class="space-y-2"><div class="flex justify-between"><span>Container</span><span>${c.name}</span></div><div class="flex justify-between"><span>Best orientation</span><span>${best.label}</span></div><div class="flex justify-between"><span>Used CBM</span><span>${usedCbm.toFixed(2)} CBM</span></div><div class="flex justify-between"><span>Container CBM</span><span>${c.cbm} CBM</span></div><div class="flex justify-between"><span>Floor positions</span><span>${best.fitL*best.fitW}</span></div><div class="flex justify-between"><span>Stacking layers</span><span>${best.fitH}</span></div></div></div><div class="mt-6 text-sm bg-emerald-50 text-emerald-800 rounded-2xl p-5"><strong>Next step:</strong> Check CBM and pallet fit, then prepare a packing list for the shipment.</div>`;document.getElementById('resultContent').innerHTML=resultHTML;document.getElementById('results').classList.remove('hidden');document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${resultHTML}</div>`}
+ document.querySelectorAll('input, select').forEach(el=>{el.addEventListener('input',calculateLoading);el.addEventListener('change',calculateLoading)});window.onload=calculateLoading;
  </script>
 </body>
 </html>
