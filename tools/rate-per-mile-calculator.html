@@ -3,180 +3,40 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="description" content="Free Rate Per Mile + Break-Even Calculator 2026 - Calculate your true cost per mile, minimum break-even rate, and profit for trucking & freight. Perfect for owner-operators and brokers.">
- <title>Rate Per Mile + Break-Even Calculator | FreightNerd</title>
+ <meta name="description" content="Free rate per mile calculator for trucking, owner-operators, dispatchers and freight brokers. Calculate cost per mile, break-even RPM, profit and target rate.">
+ <title>Rate Per Mile Calculator for Trucking & Freight | FreightNerd</title>
  <base href="/Freight-Nerd/">
  <script src="https://cdn.tailwindcss.com"></script>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
- <style>
- @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
- body { font-family: 'Inter', system-ui, sans-serif; }
- .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
- </style>
+ <script type="application/ld+json">
+ {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"What is rate per mile in trucking?","acceptedAnswer":{"@type":"Answer","text":"Rate per mile is the revenue earned for each loaded or total mile. Truckers and brokers use it to compare loads, estimate profitability and decide whether a lane is worth taking."}},
+  {"@type":"Question","name":"How do you calculate cost per mile?","acceptedAnswer":{"@type":"Answer","text":"Cost per mile is total trip cost divided by miles. Costs can include fuel, maintenance, driver pay, insurance, tolls, permits, repairs and fixed overhead."}},
+  {"@type":"Question","name":"What is break-even rate per mile?","acceptedAnswer":{"@type":"Answer","text":"Break-even rate per mile is the minimum rate needed to cover all trip costs with zero profit."}},
+  {"@type":"Question","name":"Should deadhead miles be included in rate per mile?","acceptedAnswer":{"@type":"Answer","text":"Yes. Loaded miles show customer revenue, but all miles including deadhead show the real operating economics of the trip."}},
+  {"@type":"Question","name":"How do you calculate profit per mile?","acceptedAnswer":{"@type":"Answer","text":"Profit per mile equals revenue per mile minus total cost per mile. Total profit equals profit per mile multiplied by miles."}}
+ ]}
+ </script>
+ <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
 </head>
-<body class="bg-gray-50">
-
+<body class="bg-gray-50 text-gray-900">
  <div class="max-w-6xl mx-auto px-4 py-8">
- <!-- Header -->
- <div class="flex items-center justify-between mb-8">
- <div class="flex items-center gap-3">
- <div class="text-3xl font-bold text-emerald-600">FreightNerd</div>
- </div>
- <a href="/Freight-Nerd/#tools" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2">
- <i class="fas fa-th-large"></i> All Tools
- </a>
- </div>
-
+ <div class="flex items-center justify-between mb-8"><a href="/Freight-Nerd/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a><div class="flex gap-4 text-sm font-medium"><a href="/Freight-Nerd/" class="text-emerald-600 hover:text-emerald-700">All Tools</a><a href="/Freight-Nerd/faq.html" class="text-gray-500 hover:text-emerald-700">FAQ</a></div></div>
+ <div class="mb-8 max-w-3xl"><p class="text-sm font-semibold text-emerald-600 mb-2">FREE TRUCKING TOOL</p><h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Rate Per Mile Calculator for Trucking & Freight</h1><p class="text-lg text-gray-600">Calculate cost per mile, break-even RPM, loaded-mile revenue, all-mile impact and profit before accepting or quoting a load.</p></div>
  <div class="grid lg:grid-cols-2 gap-8">
- <!-- Calculator -->
- <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- <div class="flex items-center gap-3 mb-6">
- <i class="fas fa-truck-fast text-4xl text-emerald-600"></i>
- <div>
- <h1 class="text-3xl font-semibold text-gray-900">Rate Per Mile + Break-Even</h1>
- <p class="text-gray-600">Trucking • Broker • Owner-Operator • 2026</p>
+ <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100"><div class="flex items-center gap-3 mb-6"><i class="fas fa-truck-fast text-4xl text-emerald-600"></i><div><h2 class="text-3xl font-semibold text-gray-900">Calculate Rate Per Mile</h2><p class="text-gray-600">Cost, break-even and profit check</p></div></div><div class="space-y-8"><div class="grid grid-cols-2 gap-6"><div><label class="block text-sm font-medium text-gray-600 mb-1">Loaded Miles</label><input id="loadedMiles" type="number" min="0" step="0.1" value="1200" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Deadhead Miles</label><input id="deadheadMiles" type="number" min="0" step="0.1" value="100" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div></div><div class="grid grid-cols-2 gap-6"><div><label class="block text-sm font-medium text-gray-600 mb-1">Fuel Price ($/gallon)</label><input id="fuelPrice" type="number" min="0" value="3.85" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Fuel Efficiency (MPG)</label><input id="mpg" type="number" min="0" value="6.5" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div></div><div class="grid grid-cols-2 gap-6"><div><label class="block text-sm font-medium text-gray-600 mb-1">Variable Costs per Mile ($)</label><input id="variableCost" type="number" min="0" value="0.45" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"><p class="text-xs text-gray-500 mt-1">Maintenance, tires, tolls, repairs, permits</p></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Fixed Costs per Trip ($)</label><input id="fixedCost" type="number" min="0" value="450" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"><p class="text-xs text-gray-500 mt-1">Insurance, driver pay, dispatch, overhead</p></div></div><div class="grid grid-cols-2 gap-6"><div><label class="block text-sm font-medium text-gray-600 mb-1">Revenue Rate per Loaded Mile ($)</label><input id="revenuePerMile" type="number" min="0" value="2.25" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div><div><label class="block text-sm font-medium text-gray-600 mb-1">Target Profit Margin (%)</label><input id="targetMargin" type="number" min="0" max="95" value="20" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div></div><button onclick="calculateRPM()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3"><i class="fas fa-calculator"></i> Calculate RPM & Break-Even</button></div></div>
+ <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100"><h2 class="text-2xl font-semibold mb-6">Rate Per Mile Results</h2><div id="resultContent" class="space-y-6"></div></div>
  </div>
- </div>
-
- <div class="space-y-8">
- <!-- Distance -->
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Trip Distance (miles)</label>
- <input id="distance" type="number" value="1200" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
-
- <!-- Fuel -->
- <div class="grid grid-cols-2 gap-6">
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Fuel Price ($/gallon)</label>
- <input id="fuelPrice" type="number" value="3.85" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Fuel Efficiency (MPG)</label>
- <input id="mpg" type="number" value="6.5" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
- </div>
-
- <!-- Other costs -->
- <div class="grid grid-cols-2 gap-6">
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Variable Costs per Mile ($)</label>
- <input id="variableCost" type="number" value="0.45" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- <p class="text-xs text-gray-500 mt-1">Maintenance, tolls, etc.</p>
- </div>
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Fixed Costs per Trip ($)</label>
- <input id="fixedCost" type="number" value="450" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- <p class="text-xs text-gray-500 mt-1">Driver pay, insurance, etc.</p>
- </div>
- </div>
-
- <!-- Revenue -->
- <div>
- <label class="block text-sm font-medium text-gray-600 mb-1">Revenue Rate per Mile ($)</label>
- <input id="revenuePerMile" type="number" value="2.25" step="0.01" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
- </div>
-
- <button onclick="calculateRPM()"
- class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all flex items-center justify-center gap-3">
- <i class="fas fa-calculator"></i>
- Calculate Profit &amp; Break-Even
- </button>
- </div>
- </div>
-
- <!-- Results -->
- <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- <h2 class="text-2xl font-semibold mb-6">Your Results</h2>
- <div id="resultContent" class="space-y-6"></div>
- </div>
- </div>
-
- <!-- Mobile Results -->
  <div id="mobileResults" class="lg:hidden mt-8"></div>
-
- <!-- Quick Tip -->
- <div class="mt-16 max-w-3xl mx-auto text-center">
- <h2 class="text-2xl font-semibold mb-4">Why This Matters</h2>
- <p class="text-gray-600 leading-relaxed">
- Knowing your true cost per mile helps you quote profitably, avoid losing loads, and stay ahead of rising fuel &amp; maintenance costs in 2026.
- </p>
+ <section class="mt-14 grid lg:grid-cols-3 gap-6"><div class="bg-white rounded-3xl border border-gray-100 p-6 lg:col-span-2"><h2 class="text-2xl font-bold mb-3">What is rate per mile?</h2><p class="text-gray-600 leading-relaxed">Rate per mile is the revenue earned for each mile on a trucking load. Loaded RPM shows what the customer is paying for loaded miles. All-mile RPM includes deadhead and gives a more honest view of the trip economics.</p><p class="text-gray-600 leading-relaxed mt-3">A load can look profitable on loaded miles but become weak after empty miles, fuel, maintenance, driver pay and fixed costs are included.</p></div><div class="bg-emerald-50 rounded-3xl border border-emerald-100 p-6"><h2 class="text-xl font-bold mb-3">RPM Formulas</h2><div class="bg-white rounded-2xl p-4 font-semibold text-emerald-700 text-sm space-y-2"><div>Revenue = Loaded Miles × RPM</div><div>Cost per mile = Total cost ÷ Total miles</div><div>Profit per mile = Revenue RPM − Cost per mile</div></div></div></section>
+ <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-4">What costs should be included?</h2><div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-gray-600"><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Fuel</h3><p>Fuel price and MPG usually drive the biggest variable cost.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Maintenance</h3><p>Tires, repairs, oil, wear and equipment cost should not be ignored.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Fixed costs</h3><p>Insurance, truck payment, driver pay, dispatch and overhead affect the trip.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1">Deadhead</h3><p>Empty miles create cost without direct revenue, so all-mile RPM matters.</p></div></div></section>
+ <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-5">Rate Per Mile FAQ</h2><div class="space-y-5"><div><h3 class="font-semibold text-gray-900">What is break-even rate per mile?</h3><p class="text-gray-600">It is the minimum rate needed to cover all trip costs with zero profit.</p></div><div><h3 class="font-semibold text-gray-900">Should I use loaded miles or total miles?</h3><p class="text-gray-600">Use both. Loaded miles show customer rate. Total miles reveal the true effect of deadhead and operating cost.</p></div><div><h3 class="font-semibold text-gray-900">Why can a high RPM load still be bad?</h3><p class="text-gray-600">High RPM can still fail if deadhead, fuel, tolls, waiting time or fixed costs are too high.</p></div><div><h3 class="font-semibold text-gray-900">How do I know what RPM to quote?</h3><p class="text-gray-600">Calculate total cost first, then add your target profit margin. For deeper quote logic, use the Freight Quote Risk Score tool.</p></div></div></section>
+ <section class="mt-8 flex flex-wrap gap-3"><a href="/Freight-Nerd/tools/freight-profit-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try Freight Quote Risk Tool</a><a href="/Freight-Nerd/tools/fuel-surcharge-calculator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try Fuel Surcharge Calculator</a><a href="/Freight-Nerd/tools/accessorials-surcharge-estimator.html" class="bg-white border rounded-2xl px-5 py-3 text-sm font-medium hover:bg-emerald-50">Try Accessorials Estimator</a></section>
  </div>
- </div>
-
  <script>
- function calculateRPM() {
- const distance = parseFloat(document.getElementById('distance').value) || 0;
- const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
- const mpg = parseFloat(document.getElementById('mpg').value) || 0;
- const variableCost = parseFloat(document.getElementById('variableCost').value) || 0;
- const fixedCost = parseFloat(document.getElementById('fixedCost').value) || 0;
- const revenuePerMile = parseFloat(document.getElementById('revenuePerMile').value) || 0;
-
- const fuelPerMile = mpg > 0 ? fuelPrice / mpg : 0;
- const totalVariablePerMile = fuelPerMile + variableCost;
- const fixedPerMile = distance > 0 ? fixedCost / distance : 0;
- const totalCostPerMile = totalVariablePerMile + fixedPerMile;
-
- const breakEvenRate = totalCostPerMile;
- const profitPerMile = revenuePerMile - totalCostPerMile;
- const totalProfit = profitPerMile * distance;
- const totalRevenue = revenuePerMile * distance;
- const totalCost = totalCostPerMile * distance;
-
- const resultHTML = `
- <div class="grid grid-cols-2 gap-4">
- <div class="bg-emerald-50 rounded-2xl p-6 text-center">
- <p class="text-sm text-emerald-700 font-medium">COST PER MILE</p>
- <p class="text-5xl font-semibold text-emerald-600">$${totalCostPerMile.toFixed(2)}</p>
- </div>
- <div class="bg-amber-50 rounded-2xl p-6 text-center">
- <p class="text-sm text-amber-700 font-medium">BREAK-EVEN RATE</p>
- <p class="text-5xl font-semibold text-amber-600">$${breakEvenRate.toFixed(2)}</p>
- </div>
- </div>
-
- <div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8">
- <div class="flex justify-between items-center">
- <div class="text-center">
- <p class="text-sm text-gray-500">Total Revenue</p>
- <p class="text-4xl font-semibold">$${totalRevenue.toFixed(0)}</p>
- </div>
- <div class="text-center">
- <p class="text-sm text-gray-500">Total Cost</p>
- <p class="text-4xl font-semibold">$${totalCost.toFixed(0)}</p>
- </div>
- <div class="text-center">
- <p class="text-sm text-emerald-600 font-medium">Profit</p>
- <p class="text-4xl font-bold ${profitPerMile >= 0 ? 'text-emerald-600' : 'text-red-500'}">$${totalProfit.toFixed(0)}</p>
- </div>
- </div>
- <p class="mt-6 text-center text-sm font-medium ${profitPerMile >= 0 ? 'text-emerald-600' : 'text-red-500'}">
- ${profitPerMile >= 0 ? '✅ Profitable trip' : '⚠️ You are losing money on this load'}
- </p>
- </div>
-
- <div class="mt-6 text-sm bg-gray-50 rounded-2xl p-5">
- <strong>Pro Tip:</strong> Your break-even rate is <strong>$${breakEvenRate.toFixed(2)}/mile</strong>.
- Quote anything above this to make profit. Update fuel price regularly as it changes fast in 2026.
- </div>
- `;
-
- document.getElementById('resultContent').innerHTML = resultHTML;
- document.getElementById('results').classList.remove('hidden');
-
- document.getElementById('mobileResults').innerHTML = `
- <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
- ${resultHTML}
- </div>
- `;
- }
-
- document.querySelectorAll('input').forEach(el => {
- el.addEventListener('input', calculateRPM);
- });
-
- window.onload = calculateRPM;
+ function money(n){return '$'+n.toFixed(0)}function rpm(n){return '$'+n.toFixed(2)+'/mi'}
+ function calculateRPM(){const loaded=Math.max(0,parseFloat(document.getElementById('loadedMiles').value)||0),deadhead=Math.max(0,parseFloat(document.getElementById('deadheadMiles').value)||0),fuelPrice=Math.max(0,parseFloat(document.getElementById('fuelPrice').value)||0),mpg=Math.max(0,parseFloat(document.getElementById('mpg').value)||0),variableCost=Math.max(0,parseFloat(document.getElementById('variableCost').value)||0),fixedCost=Math.max(0,parseFloat(document.getElementById('fixedCost').value)||0),revenuePerMile=Math.max(0,parseFloat(document.getElementById('revenuePerMile').value)||0),targetMargin=Math.min(95,Math.max(0,parseFloat(document.getElementById('targetMargin').value)||0));const totalMiles=loaded+deadhead,fuelPerMile=mpg>0?fuelPrice/mpg:0,totalVariablePerMile=fuelPerMile+variableCost,fixedPerMile=totalMiles>0?fixedCost/totalMiles:0,totalCostPerMile=totalVariablePerMile+fixedPerMile,totalCost=totalCostPerMile*totalMiles,totalRevenue=revenuePerMile*loaded,totalProfit=totalRevenue-totalCost,profitPerLoadedMile=loaded>0?totalProfit/loaded:0,allMileRevenue=totalMiles>0?totalRevenue/totalMiles:0,breakEvenLoaded=loaded>0?totalCost/loaded:0,breakEvenAll=totalMiles>0?totalCost/totalMiles:0,targetRevenue=targetMargin>=95?0:totalCost/(1-targetMargin/100),targetLoadedRpm=loaded>0?targetRevenue/loaded:0,revenueGap=Math.max(0,targetRevenue-totalRevenue);const resultHTML=`<div class="grid grid-cols-2 gap-4"><div class="bg-emerald-50 rounded-2xl p-6 text-center"><p class="text-sm text-emerald-700 font-medium">BREAK-EVEN LOADED RPM</p><p class="text-5xl font-semibold text-emerald-600">${rpm(breakEvenLoaded)}</p></div><div class="bg-amber-50 rounded-2xl p-6 text-center"><p class="text-sm text-amber-700 font-medium">TARGET LOADED RPM</p><p class="text-5xl font-semibold text-amber-600">${rpm(targetLoadedRpm)}</p></div></div><div class="mt-8 bg-white border border-gray-200 rounded-3xl p-8"><div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center"><div><p class="text-sm text-gray-500">Total Revenue</p><p class="text-4xl font-semibold">${money(totalRevenue)}</p></div><div><p class="text-sm text-gray-500">Total Cost</p><p class="text-4xl font-semibold">${money(totalCost)}</p></div><div><p class="text-sm text-gray-500">Profit</p><p class="text-4xl font-bold ${totalProfit>=0?'text-emerald-600':'text-red-500'}">${money(totalProfit)}</p></div></div><p class="mt-6 text-center text-sm font-medium ${totalProfit>=0?'text-emerald-600':'text-red-500'}">${totalProfit>=0?'✅ Profitable trip at current RPM':'⚠️ Losing money at current RPM'}</p></div><div class="mt-6 bg-gray-50 rounded-2xl p-5 text-sm"><div class="space-y-2"><div class="flex justify-between"><span>Fuel Cost per Mile</span><span>${rpm(fuelPerMile)}</span></div><div class="flex justify-between"><span>Total Cost per All Mile</span><span>${rpm(totalCostPerMile)}</span></div><div class="flex justify-between"><span>Current All-Mile Revenue</span><span>${rpm(allMileRevenue)}</span></div><div class="flex justify-between"><span>Break-Even All-Mile RPM</span><span>${rpm(breakEvenAll)}</span></div><div class="flex justify-between"><span>Profit per Loaded Mile</span><span>${rpm(profitPerLoadedMile)}</span></div><div class="flex justify-between"><span>Revenue Gap to Target</span><span>${money(revenueGap)}</span></div></div></div><div class="mt-6 text-sm bg-emerald-50 text-emerald-800 rounded-2xl p-5"><strong>Next step:</strong> If this trip is close to break-even, run it through the Freight Quote Risk Tool to test market RPM, deadhead risk and stress scenarios.</div>`;document.getElementById('resultContent').innerHTML=resultHTML;document.getElementById('results').classList.remove('hidden');document.getElementById('mobileResults').innerHTML=`<div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">${resultHTML}</div>`}
+ document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calculateRPM));window.onload=calculateRPM;
  </script>
 </body>
 </html>
