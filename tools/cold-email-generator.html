@@ -3,17 +3,17 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <base href="/Freight-Nerd/">
+ 
  <meta name="description" content="Cold email generator for freight outreach - generate compliant, simple broker intro emails.">
  <title>Cold Email Generator | FreightNerd</title>
  <script src="https://cdn.tailwindcss.com"></script>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body class="bg-gray-50">
 <div class="max-w-6xl mx-auto px-4 py-8">
  <div class="flex items-center justify-between mb-8">
-  <a href="/Freight-Nerd/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
-  <a href="/Freight-Nerd/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+  <a href="../"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
+  <a href="../" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
  </div>
  <div class="grid lg:grid-cols-2 gap-8">
   <div class="bg-white rounded-3xl p-8 border border-gray-100">
@@ -31,7 +31,7 @@
 </div>
 <script>
 function genEmail(){
- const n=name.value,c=company.value,t=target.value;
+ const n=document.getElementById('name').value,c=document.getElementById('company').value,t=document.getElementById('target').value;
  const e=`Subject: Capacity support for ${t}
 
 Hi,

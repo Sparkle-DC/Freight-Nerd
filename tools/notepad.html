@@ -3,18 +3,18 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <base href="/Freight-Nerd/">
+ 
  <meta name="description" content="Free Online Notepad - Quick notes for shipping details, container numbers, tracking IDs and more. Saves in your browser.">
  <title>Notepad | FreightNerd</title>
  <script src="https://cdn.tailwindcss.com"></script>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
  <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
 </head>
 <body class="bg-gray-50">
 <div class="max-w-6xl mx-auto px-4 py-8">
  <div class="flex items-center justify-between mb-8">
-  <a href="/Freight-Nerd/"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
-  <a href="/Freight-Nerd/" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+  <a href="../"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
+  <a href="../" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
  </div>
  <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
   <div class="flex items-center gap-3 mb-6"><i class="fas fa-sticky-note text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">Notepad</h1><p class="text-gray-600">Auto-saves in your browser</p></div></div>
@@ -29,7 +29,7 @@
 const ta=document.getElementById('notepad');
 ta.value=localStorage.getItem('fn_notepad')||'';
 ta.addEventListener('input',function(){localStorage.setItem('fn_notepad',this.value)});
-function clearNotes(){ta.value='';localStorage.removeItem('fn_notepad')}
+function clearNotes(){if(!confirm('Clear all notes? This cannot be undone.'))return;ta.value='';localStorage.removeItem('fn_notepad')}
 function copyNotes(){navigator.clipboard.writeText(ta.value).then(()=>alert('Copied!'))}
 </script>
 </body>

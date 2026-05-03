@@ -42,15 +42,9 @@ http://localhost:8080/
 
 ## Deployment
 
-This repo is suitable for GitHub Pages or any static host.
+This repo is suitable for GitHub Pages or any static host. The project uses relative paths and works both at the root of a domain or within a subdirectory like `/Freight-Nerd/`.
 
-Current pages use the GitHub Pages project path:
-
-```html
-<base href="/Freight-Nerd/">
-```
-
-If deploying to a custom root domain such as `freightnerd.com`, remove that base path and update hardcoded `/Freight-Nerd/` links.
+If deploying to a custom domain, no manual path updates are required.
 
 ## Privacy model
 
