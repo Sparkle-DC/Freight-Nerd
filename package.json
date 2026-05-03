@@ -1,0 +1,25 @@
+{
+  "name": "freight-nerd",
+  "version": "1.0.0",
+  "description": "FreightNerd is a static collection of free freight, logistics, and shipping calculators.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./input.css -o ./assets/style.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sparkle-DC/Freight-Nerd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Sparkle-DC/Freight-Nerd/issues"
+  },
+  "homepage": "https://github.com/Sparkle-DC/Freight-Nerd#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "tailwindcss": "^4.2.4"
+  }
+}

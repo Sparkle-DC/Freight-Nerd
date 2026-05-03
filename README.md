@@ -26,7 +26,7 @@ The site is designed to run entirely in the browser. There is no backend, no acc
 
 ## Local preview
 
-Because this is a static HTML site, you do not need Node.js or API keys to preview it.
+This is a static HTML site. You do not need Node.js to preview the existing files.
 
 From the repository root, run a simple local server:
 
@@ -38,6 +38,17 @@ Then open:
 
 ```text
 http://localhost:8080/
+```
+
+## CSS Development
+
+The site uses a pre-compiled Tailwind CSS file (`assets/style.css`) to ensure the fastest possible page load speeds and SEO Core Web Vitals. 
+
+If you add new Tailwind classes to the HTML, you must recompile the CSS. To do this, you need Node.js installed:
+
+```bash
+npm install
+npm run build
 ```
 
 ## Deployment

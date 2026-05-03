@@ -5,8 +5,17 @@
  <meta name="viewport" content="width=device-width,initial-scale=1.0">
  <meta name="description" content="About FreightNerd — free freight calculators and logistics tools built for shippers, forwarders, and truckers.">
  <title>About — FreightNerd</title>
+ <link rel="canonical" href="https://freightnerd.com/about.html">
+ <meta property="og:title" content="About — FreightNerd">
+ <meta property="og:description" content="About FreightNerd — free freight calculators and logistics tools built for shippers, forwarders, and truckers.">
+ <meta property="og:url" content="https://freightnerd.com/about.html">
+ <meta property="og:type" content="website">
+ <meta name="twitter:card" content="summary">
+ <meta name="twitter:title" content="About — FreightNerd">
+ <meta name="twitter:description" content="About FreightNerd — free freight calculators and logistics tools built for shippers, forwarders, and truckers.">
+
  
- <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="./assets/style.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
  <style>
  @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
@@ -53,7 +62,7 @@
     <a href="./contact.html" class="px-5 py-2 rounded-2xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition">Contact</a>
    </nav>
    <button id="hamburger" class="md:hidden w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-gray-100 transition">
-    <i class="fas fa-bars text-xl text-gray-700"></i>
+    <i aria-hidden="true" class="fas fa-bars text-xl text-gray-700"></i>
    </button>
   </div>
  </header>
@@ -63,13 +72,13 @@
  <div id="menuPanel" class="menu-panel">
   <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
    <span class="font-bold text-gray-900">Menu</span>
-   <button id="menuClose" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 transition"><i class="fas fa-xmark text-lg text-gray-500"></i></button>
+   <button id="menuClose" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 transition"><i aria-hidden="true" class="fas fa-xmark text-lg text-gray-500"></i></button>
   </div>
   <div class="flex-1 px-4 py-4 space-y-1">
-   <a href="./" class="flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-50 font-medium transition"><i class="fas fa-home w-5 text-emerald-600"></i> Home</a>
-   <a href="./#tools" class="flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-50 font-medium transition"><i class="fas fa-tools w-5 text-emerald-600"></i> Tools</a>
-   <a href="./about.html" class="flex items-center gap-4 px-4 py-3 rounded-2xl bg-emerald-50 text-emerald-700 font-medium"><i class="fas fa-info-circle w-5"></i> About</a>
-   <a href="./contact.html" class="flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-50 font-medium transition"><i class="fas fa-envelope w-5 text-emerald-600"></i> Contact</a>
+   <a href="./" class="flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-50 font-medium transition"><i aria-hidden="true" class="fas fa-home w-5 text-emerald-600"></i> Home</a>
+   <a href="./#tools" class="flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-50 font-medium transition"><i aria-hidden="true" class="fas fa-tools w-5 text-emerald-600"></i> Tools</a>
+   <a href="./about.html" class="flex items-center gap-4 px-4 py-3 rounded-2xl bg-emerald-50 text-emerald-700 font-medium"><i aria-hidden="true" class="fas fa-info-circle w-5"></i> About</a>
+   <a href="./contact.html" class="flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-50 font-medium transition"><i aria-hidden="true" class="fas fa-envelope w-5 text-emerald-600"></i> Contact</a>
   </div>
   <div class="px-6 py-5 border-t border-gray-100 text-xs text-gray-400">&copy; 2026 FreightNerd</div>
  </div>
@@ -141,7 +150,7 @@
     <h2 class="text-2xl md:text-4xl font-bold mb-3">Start calculating now</h2>
     <p class="text-emerald-100/80 mb-6 max-w-md mx-auto">No account. No credit card. Just pick a tool and go.</p>
     <a href="./#tools" class="inline-flex items-center gap-2 bg-white text-emerald-700 hover:bg-emerald-50 font-semibold px-8 py-4 rounded-2xl text-lg transition-all active:scale-[0.97]">
-     <i class="fas fa-tools"></i> Browse Tools
+     <i aria-hidden="true" class="fas fa-tools"></i> Browse Tools
     </a>
    </div>
   </div>
@@ -170,10 +179,10 @@
 
  <!-- Mobile bottom nav -->
  <nav class="bottom-nav md:hidden">
-  <a href="./"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="./#tools"><i class="fas fa-tools"></i><span>Tools</span></a>
-  <a href="./about.html" class="active"><i class="fas fa-info-circle"></i><span>About</span></a>
-  <a href="./contact.html"><i class="fas fa-envelope"></i><span>Contact</span></a>
+  <a href="./"><i aria-hidden="true" class="fas fa-home"></i><span>Home</span></a>
+  <a href="./#tools"><i aria-hidden="true" class="fas fa-tools"></i><span>Tools</span></a>
+  <a href="./about.html" class="active"><i aria-hidden="true" class="fas fa-info-circle"></i><span>About</span></a>
+  <a href="./contact.html"><i aria-hidden="true" class="fas fa-envelope"></i><span>Contact</span></a>
  </nav>
 
  <script>

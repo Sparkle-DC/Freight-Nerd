@@ -6,7 +6,17 @@
  
  <meta name="description" content="Free Carbon Emissions Calculator for shipping - Estimate CO2 emissions for truck, ocean, air, and rail freight. Track your carbon footprint.">
  <title>Carbon Emissions Calculator | FreightNerd</title>
- <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="canonical" href="https://freightnerd.com/tools/carbon-emissions-calculator.html">
+ <meta property="og:title" content="Carbon Emissions Calculator | FreightNerd">
+ <meta property="og:description" content="Free Carbon Emissions Calculator for shipping - Estimate CO2 emissions for truck, ocean, air, and rail freight. Track your carbon footprint.">
+ <meta property="og:url" content="https://freightnerd.com/tools/carbon-emissions-calculator.html">
+ <meta property="og:type" content="website">
+ <meta name="twitter:card" content="summary">
+ <meta name="twitter:title" content="Carbon Emissions Calculator | FreightNerd">
+ <meta name="twitter:description" content="Free Carbon Emissions Calculator for shipping - Estimate CO2 emissions for truck, ocean, air, and rail freight. Track your carbon footprint.">
+ <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Carbon Emissions Calculator","description":"Free Carbon Emissions Calculator for shipping - Estimate CO2 emissions for truck, ocean, air, and rail freight. Track your carbon footprint.","url":"https://freightnerd.com/tools/carbon-emissions-calculator.html","applicationCategory":"BusinessApplication","operatingSystem":"All"}</script>
+
+ <link rel="stylesheet" href="../assets/style.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
  <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .calculator-card { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }</style>
 </head>
@@ -14,11 +24,11 @@
 <div class="max-w-6xl mx-auto px-4 py-8">
  <div class="flex items-center justify-between mb-8">
   <a href="../"><div class="text-3xl font-bold text-emerald-600">FreightNerd</div></a>
-  <a href="../" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i class="fas fa-th-large"></i> All Tools</a>
+  <a href="../" class="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-2"><i aria-hidden="true" class="fas fa-th-large"></i> All Tools</a>
  </div>
  <div class="grid lg:grid-cols-2 gap-8">
   <div class="calculator-card bg-white rounded-3xl p-8 border border-gray-100">
-   <div class="flex items-center gap-3 mb-6"><i class="fas fa-leaf text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">Carbon Emissions Calculator</h1><p class="text-gray-600">CO₂ estimates for your shipments</p></div></div>
+   <div class="flex items-center gap-3 mb-6"><i aria-hidden="true" class="fas fa-leaf text-4xl text-emerald-600"></i><div><h1 class="text-3xl font-semibold text-gray-900">Carbon Emissions Calculator</h1><p class="text-gray-600">CO₂ estimates for your shipments</p></div></div>
    <div class="space-y-6">
     <div><label class="block text-sm font-medium text-gray-600 mb-1">Transport Mode</label>
      <select id="mode" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg">
@@ -30,7 +40,7 @@
     </div>
     <div><label class="block text-sm font-medium text-gray-600 mb-1">Distance (miles)</label><input id="distance" type="number" value="1500" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
     <div><label class="block text-sm font-medium text-gray-600 mb-1">Weight (lbs)</label><input id="weight" type="number" value="15000" class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:border-emerald-500 text-lg"></div>
-    <button onclick="calcEmissions()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all"><i class="fas fa-calculator"></i> Calculate Emissions</button>
+    <button onclick="calcEmissions()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-5 rounded-3xl text-xl transition-all"><i aria-hidden="true" class="fas fa-calculator"></i> Calculate Emissions</button>
    </div>
   </div>
   <div id="results" class="hidden lg:block calculator-card bg-white rounded-3xl p-8 border border-gray-100">
