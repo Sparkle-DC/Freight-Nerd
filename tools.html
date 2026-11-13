@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1.0">
+ <meta name="description" content="Browse all 17 free FreightNerd calculators: CBM, freight class, DIM weight, pallet and container loading, landed cost, fuel surcharge, rate per mile and more.">
+ <title>All Freight Calculators & Tools | FreightNerd</title>
+ <link rel="canonical" href="https://freightnerd.com/tools">
+ <meta property="og:title" content="All Freight Calculators & Tools | FreightNerd">
+ <meta property="og:description" content="Browse all 17 free FreightNerd calculators for freight, trucking, warehousing and import/export math.">
+ <meta property="og:url" content="https://freightnerd.com/tools">
+ <meta property="og:type" content="website">
+ <meta name="twitter:card" content="summary">
+ <meta name="twitter:title" content="All Freight Calculators & Tools | FreightNerd">
+ <meta name="twitter:description" content="Browse all 17 free FreightNerd calculators for freight, trucking, warehousing and import/export math.">
+
+ 
+ <link rel="stylesheet" href="./assets/style.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+ <style>
+ @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+ * { -webkit-tap-highlight-color: transparent; }
+ body { font-family: 'Inter', system-ui, -apple-system, sans-serif; overscroll-behavior: none; -webkit-font-smoothing: antialiased; }
+ html { scroll-behavior: smooth; }
+
+ .hero-grad { background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #0f766e 100%); }
+
+ .stat-box { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 16px; }
+
+ /* Fade-in */
+ .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
+ .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+ /* Mobile bottom nav */
+ .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; z-index: 100; padding: 6px 0 env(safe-area-inset-bottom,6px); display: flex; justify-content: space-around; }
+ .bottom-nav a { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: #64748b; text-decoration: none; padding: 4px 12px; }
+ .bottom-nav a.active { color: #059669; }
+ .bottom-nav a i { font-size: 20px; }
+ @media (max-width: 640px) { body { padding-bottom: 68px; } }
+ @media (min-width: 641px) { .bottom-nav { display: none; } body { padding-bottom: 0 !important; } }
+
+ /* Menu */
+ .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 90; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+ .menu-overlay.open { opacity: 1; pointer-events: auto; }
+ .menu-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 280px; background: white; z-index: 95; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; }
+ .menu-panel.open { transform: translateX(0); }
+ </style>
+ <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VKNZK0FBDK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VKNZK0FBDK');
+</script>
+</head>
+<body>
+  <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+   <a href="./" class="flex items-center gap-2">
+    <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-sm">FN</div>
+    <span class="text-xl font-bold text-gray-900 tracking-tight">FreightNerd</span>
+   </a>
+   <nav class="hidden md:flex items-center gap-1">
+    <a href="./" class="px-4 py-2 rounded-2xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition">Home</a>
+    <a href="./#tools" class="px-4 py-2 rounded-2xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition">Tools</a>
+    <a href="./about" class="px-4 py-2 rounded-2xl text-sm font-medium bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition">About</a>
+    <a href="./contact" class="px-5 py-2 rounded-2xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition">Contact</a>
+   </nav>
+   <button id="hamburger" class="md:hidden w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-gray-100 transition">
+    <i aria-hidden="true" class="fas fa-bars text-xl text-gray-700"></i>
+   </button>
+  </div>
+ </header>
+  <main class="max-w-6xl mx-auto px-4 py-10">
+  <div class="mb-8 max-w-3xl"><p class="text-sm font-semibold text-emerald-600 mb-2">ALL TOOLS</p><h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Freight Calculators &amp; Tools</h1><p class="text-lg text-gray-600">All 17 free FreightNerd tools, grouped by the job they do: import and ocean/air shipping math, US trucking and LTL pricing, and everyday utilities. Every tool runs in your browser — no sign-up.</p><p class="text-gray-600 mt-3">Quoting a load end to end? Follow the <a href="/freight-quote-workflow" class="text-emerald-600 font-medium">4-step freight quote workflow</a>: rate per mile, fuel surcharge, accessorials, then the risk decision.</p></div>
+  <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-4">Import, Ocean & Air</h2><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-600"><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/cbm-calculator">CBM Calculator</a></h3><p>Cubic metres for LCL, FCL and air cargo cartons.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/container-loading-optimizer">Container Loading Optimizer</a></h3><p>How many boxes or pallets fit in a 20ft, 40ft or 40ft high cube container.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/pallet-calculator">Pallet Calculator</a></h3><p>Boxes per layer, layers and pallets for a shipment.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/dim-weight-calculator">DIM Weight Calculator</a></h3><p>Dimensional vs actual weight for parcel and air freight.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/landed-cost-estimator">Landed Cost Estimator</a></h3><p>Goods + freight + duty + tax per unit for importers.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/hs-code-duty-estimator">HS Code Planning Helper</a></h3><p>Scenario duty and VAT planning by destination country.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/packing-list-generator">Packing List Generator</a></h3><p>Build a shipment packing list in the browser.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/transit-time-mode-comparator">Transit Time & Mode Comparator</a></h3><p>Compare ocean, air and road transit times.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/carbon-emissions-calculator">Carbon Emissions Calculator</a></h3><p>CO2 estimates for freight movements.</p></div></div></section>
+  <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-4">US Trucking & LTL</h2><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-600"><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/freight-class-density-calculator">Freight Class & Density Calculator</a></h3><p>Density-based NMFC class estimate with the full density chart.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/rate-per-mile-calculator">Rate Per Mile Calculator</a></h3><p>Cost, break-even and profit per mile, including deadhead.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/fuel-surcharge-calculator">Fuel Surcharge Calculator</a></h3><p>Surcharge from diesel price, base price, MPG and miles.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/accessorials-surcharge-estimator">Accessorials Surcharge Estimator</a></h3><p>Liftgate, detention, residential and other extra charges.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/freight-profit-calculator">Freight Profit Calculator</a></h3><p>Quote profit check with local history and CSV export.</p></div></div></section>
+  <section class="mt-8 bg-white rounded-3xl border border-gray-100 p-8"><h2 class="text-2xl font-bold mb-4">Utilities</h2><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-600"><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/unit-converter">Unit Converter</a></h3><p>Inches/cm, lbs/kg and CBM/cubic feet conversions.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/cold-email-generator">Cold Email Generator</a></h3><p>Starter outreach emails for freight sales.</p></div><div class="bg-gray-50 rounded-2xl p-4"><h3 class="font-semibold text-gray-900 mb-1"><a href="/tools/notepad">Browser Notepad</a></h3><p>Quick notes stored only in your browser.</p></div></div></section>
+  </main>
+  <footer class="bg-gray-900 text-white py-10 md:py-14">
+  <div class="max-w-6xl mx-auto px-4">
+   <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+    <div class="flex items-center gap-3">
+     <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg">FN</div>
+     <span class="text-lg font-bold">FreightNerd</span>
+    </div>
+    <div class="flex gap-6 text-sm text-gray-400">
+     <a href="./" class="hover:text-white transition">Home</a>
+     <a href="./#tools" class="hover:text-white transition">Tools</a>
+     <a href="./about" class="hover:text-white transition">About</a>
+     <a href="./contact" class="hover:text-white transition">Contact</a>
+    </div>
+   </div>
+   <div class="border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
+    &copy; 2026 FreightNerd. All tools are free and run entirely in your browser.
+   </div>
+  </div>
+ </footer>
+</body>
+</html>

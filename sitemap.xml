@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
  <url><loc>https://freightnerd.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
- <url><loc>https://freightnerd.com/about.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
- <url><loc>https://freightnerd.com/contact.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
- <url><loc>https://freightnerd.com/tools/cbm-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/pallet-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/packing-list-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/freight-profit-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/fuel-surcharge-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/carbon-emissions-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/unit-converter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/notepad.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
- <url><loc>https://freightnerd.com/tools/cold-email-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
- <url><loc>https://freightnerd.com/tools/freight-class-density-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/dim-weight-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/container-loading-optimizer.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/rate-per-mile-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/landed-cost-estimator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/accessorials-surcharge-estimator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/hs-code-duty-estimator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
- <url><loc>https://freightnerd.com/tools/transit-time-mode-comparator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/freight-quote-workflow</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+ <url><loc>https://freightnerd.com/about</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+ <url><loc>https://freightnerd.com/contact</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+ <url><loc>https://freightnerd.com/faq</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+ <url><loc>https://freightnerd.com/privacy</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+ <url><loc>https://freightnerd.com/disclaimer</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+ <url><loc>https://freightnerd.com/tools/cbm-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/pallet-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/packing-list-generator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/freight-profit-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/fuel-surcharge-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/carbon-emissions-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/unit-converter</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/notepad</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+ <url><loc>https://freightnerd.com/tools/cold-email-generator</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+ <url><loc>https://freightnerd.com/tools/freight-class-density-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/dim-weight-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/container-loading-optimizer</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/rate-per-mile-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/landed-cost-estimator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/accessorials-surcharge-estimator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/hs-code-duty-estimator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+ <url><loc>https://freightnerd.com/tools/transit-time-mode-comparator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
